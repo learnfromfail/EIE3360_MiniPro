@@ -15,14 +15,15 @@ public class Character : MonoBehaviour {
       
         currentX = 20;
         currentY = 0;
-        
-        this.gameObject.transform.position = ChangeV2toV3(ChangeCoordinateTofloat(currentX, currentY)); ;
+        this.gameObject.transform.position = ChangeV2toV3(ChangeCoordinateTofloat(currentX, currentY));
     }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    
 
     public void Move(int x,int y)
     {
@@ -86,7 +87,7 @@ public class Character : MonoBehaviour {
                 if ((ug.coordinateX == par[2] && ug.coordinateY == par[3]) || timesLoop > 2000) {
                     Debug.Log("times: " + timesLoop + ", to " + end + " from " + ug.gameObject.transform.position);
                     IsReached = true;
-                    //return;
+                    nextUG = ug;
                     break;
                 }
                 // Debug.Log("name"+ ug.gameObject.name);
@@ -129,6 +130,8 @@ public class Character : MonoBehaviour {
                 visitedUGs.Add(nextUG);
                 unvisitedNeighbour.Remove(nextUG);
                 nextUG.gameObject.GetComponent<Renderer>().material.color = Color.green;
+                this.gameObject.transform.position = ChangeV2toV3(ChangeCoordinateTofloat(nextUG.coordinateX, nextUG.coordinateY));
+                currentX = nextUG.coordinateX; currentY = nextUG.coordinateY;
             }
             else 
             {
