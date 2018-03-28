@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour {
-    int currentX;
-    int currentY;
-    public backgroundSetting BS;
+    public int currentX;
+    public int currentY;
+    public static backgroundSetting BS;
+
+    public string CharName;
+    public int movingPower;
+    public int noOfMove;
+    public MenuController menuc;
+    //
+    public GameObject UImenu;
 
 	void Start () {
         BS = GameObject.Find("EventSystem").GetComponent<backgroundSetting>();
@@ -13,17 +20,29 @@ public class Character : MonoBehaviour {
         BS.Characters.Add(this.gameObject);
         BS.UpdateCharacter();
       
-        currentX = 20;
-        currentY = 0;
         this.gameObject.transform.position = ChangeV2toV3(ChangeCoordinateTofloat(currentX, currentY));
+
+        menuc = GameObject.Find("EventSystem").GetComponent<MenuController>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if (Input.GetKeyDown(KeyCode.A))
+            touches();
 
-    
+    }
+    private void OnMouseOver()
+    {
+        
+    }
+    private void OnMouseExit()
+    {
+       // menuc.enabled = false;
+    }
+    public void touches()
+    {
+        menuc.enabled = true;
+    }
 
     public void Move(int x,int y)
     {
@@ -74,13 +93,11 @@ public class Character : MonoBehaviour {
         visitedUGs.Add(nextUG);
        // unvisitedNeighbour = nextUG.neighbourUnit;
 
-        
-
         //   foreach (UnitGround ugRange in unvisitedNeighbour)
         //  {
         while (IsReached == false) {
             int noOfObstacle = 0, noOfVisited = 0;
-            float dist2 = Mathf.Infinity;
+            float oldDist = Mathf.Infinity;
             foreach (UnitGround ug in nextUG.neighbourUnit)
             {
                 timesLoop++;
@@ -103,7 +120,7 @@ public class Character : MonoBehaviour {
                     if (unvisitedNeighbour.Contains(ug) == false)
                     {
                         unvisitedNeighbour.Add(ug);//3
-                        ug.gameObject.GetComponent<Renderer>().material.color = Color.grey;//represent neighbour
+                       // ug.gameObject.GetComponent<Renderer>().material.color = Color.grey;//represent neighbour
                     }
                     else
                     {
@@ -118,10 +135,14 @@ public class Character : MonoBehaviour {
                 float newDist = Vector3.Distance(ChangeV2toV3(ChangeCoordinateTofloat(ug.gameObject.GetComponent<UnitGround>().coordinateX, ug.gameObject.GetComponent<UnitGround>().coordinateY)), end);
                 // Debug.Log(ug.gameObject.name+"  starts at" + ug.gameObject.transform.TransformPoint(ug.gameObject.transform.position));
 
-                if (newDist <= dist2)
+                if (newDist < oldDist)
                 {
-                    dist2 = newDist; nextUG = ug;
+                    oldDist = newDist; nextUG = ug;
                     // Debug.Log("Add: " + ug.gameObject.name);
+                }
+                else if(newDist==oldDist)//debug
+                {
+                   // nextUG; ug;
                 }
             }
             if ( ((noOfVisited + noOfObstacle) != nextUG.noOfNeigh) /*&& ((noOfVisited + noOfObstacle)!=nextUG.noOfNeigh-1)*/) {
@@ -129,7 +150,7 @@ public class Character : MonoBehaviour {
                 yield return new WaitForSeconds(0.0001f);
                 visitedUGs.Add(nextUG);
                 unvisitedNeighbour.Remove(nextUG);
-                nextUG.gameObject.GetComponent<Renderer>().material.color = Color.green;
+              //  nextUG.gameObject.GetComponent<Renderer>().material.color = Color.green;
                 this.gameObject.transform.position = ChangeV2toV3(ChangeCoordinateTofloat(nextUG.coordinateX, nextUG.coordinateY));
                 currentX = nextUG.coordinateX; currentY = nextUG.coordinateY;
             }
@@ -141,6 +162,7 @@ public class Character : MonoBehaviour {
                 nextUG = path[path.Count-1];
             }
             timesLoop++;
+            /*
             string name = "";
             for (int iii = 0; iii < path.Count; iii++)
             {
@@ -148,6 +170,24 @@ public class Character : MonoBehaviour {
                 if(iii==path.Count-1)
                     Debug.Log(name);
             }
+            */
         }
     }
+
+    private void OnMouseDown()
+    {
+        
+    }
+    /*
+    UnitGround compareResult(UnitGround ug1, UnitGround ug2)
+    {
+        float dis = Mathf.Infinity;
+        foreach(UnitGround ugSon in ug1.neighbourUnit)
+        {
+            float newDist = Vector3.Distance(ChangeV2toV3(ChangeCoordinateTofloat
+                (ug.gameObject.GetComponent<UnitGround>().coordinateX, ug.gameObject.GetComponent<UnitGround>().coordinateY)), end);
+
+        }
+    }
+    */
 }
