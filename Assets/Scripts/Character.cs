@@ -8,7 +8,9 @@ public class Character : MonoBehaviour {
     public static backgroundSetting BS;
 
     public string CharName;
-    public int movingPower;
+    public int speed;
+    public int movingAbility;
+
     public int noOfMove;
     public MenuController menuc;
     //
@@ -23,6 +25,7 @@ public class Character : MonoBehaviour {
         this.gameObject.transform.position = ChangeV2toV3(ChangeCoordinateTofloat(currentX, currentY));
 
         menuc = GameObject.Find("EventSystem").GetComponent<MenuController>();
+        
     }
 	
 	// Update is called once per frame
@@ -105,6 +108,15 @@ public class Character : MonoBehaviour {
                     Debug.Log("times: " + timesLoop + ", to " + end + " from " + ug.gameObject.transform.position);
                     IsReached = true;
                     nextUG = ug;
+                    /*
+                    for(int i =0; i < 10; i++)
+                    {
+                        StartCoroutine("WaitForTime2");
+                    }
+                    */
+                    ///////////////////////////////3 29
+                    
+                    Debug.Log("Now Look at Character" + BS.RankWhoseTurn(BS.round + 1));
                     break;
                 }
                 // Debug.Log("name"+ ug.gameObject.name);
@@ -145,14 +157,18 @@ public class Character : MonoBehaviour {
                    // nextUG; ug;
                 }
             }
+
             if ( ((noOfVisited + noOfObstacle) != nextUG.noOfNeigh) /*&& ((noOfVisited + noOfObstacle)!=nextUG.noOfNeigh-1)*/) {
                 path.Add(nextUG);//2nd pt and afterwards
-                yield return new WaitForSeconds(0.0001f);
+                //yield return new WaitForSeconds(1f);
                 visitedUGs.Add(nextUG);
                 unvisitedNeighbour.Remove(nextUG);
               //  nextUG.gameObject.GetComponent<Renderer>().material.color = Color.green;
                 this.gameObject.transform.position = ChangeV2toV3(ChangeCoordinateTofloat(nextUG.coordinateX, nextUG.coordinateY));
-                currentX = nextUG.coordinateX; currentY = nextUG.coordinateY;
+                yield return new WaitForSeconds(1f);
+                if (IsReached==true)
+                    Camera.main.gameObject.GetComponent<CameraMovement>().setFly(BS.Characters[BS.RankWhoseTurn(BS.round + 1)].transform.position);
+                    currentX = nextUG.coordinateX; currentY = nextUG.coordinateY;
             }
             else 
             {

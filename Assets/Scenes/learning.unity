@@ -217,7 +217,8 @@ MonoBehaviour:
   currentX: 0
   currentY: 10
   CharName: cc0
-  movingPower: 10
+  speed: 10
+  movingAbility: 1
   noOfMove: 0
   menuc: {fileID: 0}
   UImenu: {fileID: 0}
@@ -594,7 +595,8 @@ MonoBehaviour:
   currentX: 0
   currentY: 0
   CharName: cc1
-  movingPower: 25
+  speed: 20
+  movingAbility: 3
   noOfMove: 0
   menuc: {fileID: 0}
   UImenu: {fileID: 0}
@@ -1281,7 +1283,8 @@ MonoBehaviour:
   currentX: 0
   currentY: 20
   CharName: cc2
-  movingPower: 20
+  speed: 25
+  movingAbility: 10
   noOfMove: 0
   menuc: {fileID: 0}
   UImenu: {fileID: 0}
@@ -1526,10 +1529,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba403d2e8754abb4297c2d120668b6fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentX: 0
-  currentY: 20
+  currentX: 10
+  currentY: 12
   CharName: cc3
-  movingPower: 50
+  speed: 50
+  movingAbility: 20
   noOfMove: 0
   menuc: {fileID: 0}
   UImenu: {fileID: 0}
@@ -1679,13 +1683,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1708748946}
-  m_LocalRotation: {x: 0.57190275, y: -0, z: -0, w: 0.8203215}
+  m_LocalRotation: {x: 0.38905612, y: -0, z: -0, w: 0.9212141}
   m_LocalPosition: {x: 0, y: 13.03, z: -14.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 69.76601, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45.792004, y: 0, z: 0}
 --- !u!114 &1708748952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2173,6 +2177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b34dea93bf5d93408d00d1c81aed366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisStage: {fileID: 0}
   WhoCurrentInTurn: {fileID: 0}
   buttonsStored:
   - {fileID: 1209051432723164, guid: 58a926a14af990444ab7c5fb5ecf2def, type: 2}
@@ -2187,6 +2192,10 @@ MonoBehaviour:
   - Skill
   - Wait
   ParentCanvas: {fileID: 0}
+  chooseMove: 0
+  chooseAttack: 0
+  chooseSkill: 0
+  chooseWait: 0
 --- !u!114 &2125230812
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 
 public class MenuController : MonoBehaviour {
-
+    public backgroundSetting thisStage;
 
     public Character WhoCurrentInTurn;
     public List<GameObject> buttonsStored = new List<GameObject>();
@@ -22,10 +22,17 @@ public class MenuController : MonoBehaviour {
     int timesPress = 0;
     bool IsArrived = true;
 
-     void Start()
+    public bool chooseMove = false;
+    public bool chooseAttack = false;
+    public bool chooseSkill = false;
+    public bool chooseWait = false;
+
+    void Start()
     {
         Start1();
+        thisStage = GameObject.Find("EventSystem").GetComponent<backgroundSetting>();
     }
+
     void Start1 () {
         ParentCanvas = GameObject.Find("MenuCanvas");
         int nameNo = 0;
@@ -33,8 +40,7 @@ public class MenuController : MonoBehaviour {
         fre = 0;
         foreach (GameObject button in buttonsStored)
         {
-           GameObject but =  Instantiate(button);
-            
+            GameObject but =  Instantiate(button);
             but.name = "button No"+nameNo++;
             but.transform.SetParent(ParentCanvas.transform);
             but.GetComponent<RectTransform>().offsetMax = new Vector2(0f, 0f);
@@ -45,11 +51,13 @@ public class MenuController : MonoBehaviour {
                 //but.transform.parent.position;
         }
         for (int i = 0; i < buttonName.Length; i++)
+        {
             ParentCanvas.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = buttonName[i];
+            ParentCanvas.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(ClickMove);
+        }
         IsCompletedReveal = false;
 
         ///handling text
-
     }
     void CheckKeyDown()
     {
@@ -82,7 +90,6 @@ public class MenuController : MonoBehaviour {
         
     }
  
-
     void Update () {
         if (IsCompletedReveal == false)
         {
@@ -90,6 +97,7 @@ public class MenuController : MonoBehaviour {
         }
         CheckKeyDown();
     }
+
     void SetButtonAndSlide()
     {
         int i = 0;
@@ -127,6 +135,7 @@ public class MenuController : MonoBehaviour {
         targetPoint += pivot;
         return targetPoint;
     }
+
     void savePosition()
     {
             foreach(GameObject Button in buttonsShowed)
@@ -134,6 +143,7 @@ public class MenuController : MonoBehaviour {
             ButtonPosition.Add(new Vector3(Button.transform.position.x, Button.transform.position.y));
         }
     }
+
     public void Reset()
     {
         if (this.enabled == false)
@@ -158,5 +168,15 @@ public class MenuController : MonoBehaviour {
     {
         Debug.Log(this.gameObject.name);
     }
+    
+    public void ClickMove()
+    {
+        chooseMove = true;
+        thisStage.chooseMove();
+    }
 
+    public void ClickWait()
+    {
+        chooseWait = true;
+    }
 }

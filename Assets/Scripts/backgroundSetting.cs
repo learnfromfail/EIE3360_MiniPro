@@ -34,6 +34,7 @@ public class backgroundSetting : MonoBehaviour
     void Start()
     {
         main_camera = Camera.main;
+
         AllUnit = new List<GameObject>();
         BattleOrder = new List<int>();
 
@@ -51,7 +52,7 @@ public class backgroundSetting : MonoBehaviour
         turntext = GameObject.Find("TurnText").GetComponent<Text>();
         broadtext = GameObject.Find("broadText").GetComponent<Text>();
 
-       
+        Camera.main.gameObject.GetComponent<CameraMovement>().setFly(Characters[3].transform.position);//should use a objective
     }
     void Update()
     {
@@ -61,7 +62,7 @@ public class backgroundSetting : MonoBehaviour
     {
         foreach(GameObject ug in AllUnit)
         {
-            ug.GetComponent<UnitGround>().OnMouseUp();
+            ug.gameObject.GetComponent<Renderer>().material.color = ug.GetComponent<UnitGround>().orig;//this.gameObject.GetComponent<Renderer>().material.color = orig;
         }
     }
 
@@ -96,6 +97,7 @@ public class backgroundSetting : MonoBehaviour
             }
          setNeighbourGround();
     }
+
     public void setNeighbourGround() // this function fails to work
     {
         foreach (GameObject Unit in AllUnit)
@@ -117,7 +119,7 @@ public class backgroundSetting : MonoBehaviour
     }
     public void ChangeTurnText(int CharID)
     {
-        turntext.text = round+" "+ Characters[CharID].GetComponent<Character>().CharName + "s'turn "+ Characters[CharID].GetComponent<Character>().movingPower;
+        turntext.text = round+" "+ Characters[CharID].GetComponent<Character>().CharName + "s'turn "+ Characters[CharID].GetComponent<Character>().speed;
         broadtext.text = Characters[0].GetComponent<Character>().CharName+": "+rankList[0]+" "+
                          Characters[1].GetComponent<Character>().CharName+": "+rankList[1]+" "+
                          Characters[2].GetComponent<Character>().CharName + ": " + rankList[2] + " "+
@@ -129,8 +131,8 @@ public class backgroundSetting : MonoBehaviour
         initialVal = new int[Characters.Count];
         int endPoint = 100;
         for (int i=0;i<Characters.Count;i++){
-            rankList[i] = endPoint / Characters[i].GetComponent<Character>().movingPower -1 ;  //10  25  20  50
-            initialVal[i] = endPoint / Characters[i].GetComponent<Character>().movingPower -1;//=> 10 4 5 2 ==> 9 3 4 1
+            rankList[i] = endPoint / Characters[i].GetComponent<Character>().speed -1 ;  //10  25  20  50
+            initialVal[i] = endPoint / Characters[i].GetComponent<Character>().speed -1;//=> 10 4 5 2 ==> 9 3 4 1
             //Debug.Log("Ch"+i+": "+ initialVal[i]+" .");
         }
          
@@ -241,5 +243,55 @@ public class backgroundSetting : MonoBehaviour
             }
         }
         return returnArray;
+    }
+
+    public void chooseMove()//show movable range 
+    {
+        List<UnitGround> MoveRange = new List<UnitGround>();
+        List<UnitGround> ConsideredUG = new List<UnitGround>();
+        Character currentCharacter = Characters[RankWhoseTurn(round+1)].GetComponent<Character>();
+        UnitGround UnitBeingStepped =  AllUnits[currentCharacter.currentX, currentCharacter.currentY].GetComponent<UnitGround>();
+
+        /*
+        foreach (UnitGround possibleUG in UnitBeingStepped.neighbourUnit)//use 1 movingAbility
+        {
+            if (possibleUG.groundType == 0)
+            {
+                MoveRange.Add(possibleUG);
+                possibleUG.
+            }
+        }
+        */
+        UnitBeingStepped.gameObject.GetComponent<Renderer>().material.color = Color.cyan;
+        MoveRange.Add(UnitBeingStepped);//MoveRange is the list to consider their neighb
+        ConsideredUG.Add(UnitBeingStepped);//ConsideredUG means to object to reconsider the considered unitGround
+        List<UnitGround> SpareList = SpareList = new List<UnitGround>();
+
+        int addNum = 0;
+        for (int i = 0; i < currentCharacter.movingAbility/*-1*/; i++)//the -1 comes from the above foreach
+        {
+            foreach (UnitGround possibleUG in MoveRange)
+            {
+                
+               // Debug.Log("where0");
+                foreach (UnitGround FurtherPossibleUG in possibleUG.neighbourUnit)
+                {
+                    if ((FurtherPossibleUG.groundType == 0 && (SpareList.Contains(FurtherPossibleUG) == false)) && (ConsideredUG.Contains(FurtherPossibleUG) == false))
+                    {
+                        //MoveRange.Add(FurtherPossibleUG);
+                        SpareList.Add(FurtherPossibleUG);
+                        Debug.Log(++addNum+" "+ FurtherPossibleUG.gameObject.name);
+                        FurtherPossibleUG.gameObject.GetComponent<Renderer>().material.color = Color.cyan;
+                    }
+                }
+                //MoveRange.Remove(possibleUG);
+                 ConsideredUG.Add(possibleUG);
+                
+               // Debug.Log("where1");
+            }
+            MoveRange = new List<UnitGround>(SpareList);
+            SpareList.Clear();
+        }
+        Debug.Log("where3");
     }
 }

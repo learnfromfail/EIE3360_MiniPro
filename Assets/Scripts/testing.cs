@@ -16,7 +16,7 @@ public class testing : MonoBehaviour {
 
         gL = new List<GameObject>();
         gL.Add(g1); gL.Add(g2); gL.Add(g3); gL.Add(g4);
-        Camera.main.gameObject.GetComponent<CameraMovement>().setFly(gL[times].transform.position);
+        //Camera.main.gameObject.GetComponent<CameraMovement>().setFly(gL[times].transform.position);
         /*
          * 
         helloQ = new Queue<int>();
@@ -45,6 +45,23 @@ public class testing : MonoBehaviour {
                 break;
             }
          */
+
+ 
+        //    {
+        //        debug.log("where0");
+        //        foreach (unitground furtherpossibleug in possibleug.neighbourunit)
+        //        {
+        //            if ((furtherpossibleug.groundtype == 0 && (moverange.contains(furtherpossibleug) == false)) && (consideredug.contains(furtherpossibleug) == false))
+        //            {
+        //                moverange.add(furtherpossibleug);
+        //                debug.log(++addnum);
+        //                furtherpossibleug.gameobject.getcomponent<renderer>().material.color = color.cyan;
+        //            }
+        //        }
+        //        moverange.remove(possibleug);
+        //        consideredug.add(possibleug);
+        //        debug.log("where1");
+        //    }
     }
 
     // Update is called once per frame
@@ -74,7 +91,7 @@ for (int i = myUnit.coordinateX - 1; i <= myUnit.coordinateX + 1; i++)
     }
 }
 */
-   public void OnMouseDown()
+    public void OnMouseDown()
     {
         Debug.Log("time:"+ times++);
         Camera.main.gameObject.GetComponent<CameraMovement>().setFly(gL[(times)% gL.Count].transform.position);

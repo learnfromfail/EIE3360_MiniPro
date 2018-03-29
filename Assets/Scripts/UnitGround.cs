@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnitGround : MonoBehaviour {
     public static backgroundSetting BS;
+    public static MenuController MC;
     public int coordinateX;
     public int coordinateY;
     public int groundType = 0; //0 is grassground //1 is mudd //2 obstacle
@@ -11,6 +12,7 @@ public class UnitGround : MonoBehaviour {
     public int noOfNeigh = 0;
     public bool considered = false;
     // Use this for initialization
+    
 
     public Color orig;
 
@@ -19,11 +21,8 @@ public class UnitGround : MonoBehaviour {
 
     void Start () {
         BS = GameObject.Find("EventSystem").GetComponent<backgroundSetting>();
+        MC = GameObject.Find("EventSystem").GetComponent<MenuController>();
         orig = this.gameObject.GetComponent<Renderer>().material.color;
-        //  Debug.Log("myX,Y " + coordinateX + ", " + coordinateY);
-        
-        Camera.main.gameObject.GetComponent<CameraMovement>().setFly(BS.Characters[2].transform.position); // set up first
-        Debug.Log("Now Look at Character" + 3);
     }
     
     void Update () {
@@ -31,17 +30,23 @@ public class UnitGround : MonoBehaviour {
 	}
     void OnMouseDown()
     {
-       
-        this.gameObject.GetComponent<Renderer>().material.color = Color.red;
-        BS.round++;
-        BS.Characters[BS.RankWhoseTurn(BS.round)].GetComponent<Character>().Move(coordinateX, coordinateY);
-        Camera.main.gameObject.GetComponent<CameraMovement>().setFly(BS.Characters[BS.RankWhoseTurn(BS.round+1)].transform.position);//flyToNextTurn
-        Debug.Log("Now Look at Character" + BS.RankWhoseTurn(BS.round + 1));
+
     }
    public void OnMouseUp()
     {
-        this.gameObject.GetComponent<Renderer>().material.color = orig;
+        
+        if (MC.chooseMove == true)
+        {
+            if (this.gameObject.GetComponent<Renderer>().material.color != Color.cyan)
+                return;
+            this.gameObject.GetComponent<Renderer>().material.color = Color.red;
+            BS.round++;
+            BS.Characters[BS.RankWhoseTurn(BS.round)].GetComponent<Character>().Move(coordinateX, coordinateY);
+            MC.chooseMove = false;
+            BS.Restart();
+        }
     }
+
     public void setGroundType(int type)
     {
         switch (type)
