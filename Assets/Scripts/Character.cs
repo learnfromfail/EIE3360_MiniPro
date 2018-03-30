@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour {
     public int currentX;
@@ -8,8 +9,17 @@ public class Character : MonoBehaviour {
     public static backgroundSetting BS;
 
     public string CharName;
-    public int speed;
-    public int movingAbility;
+    public int career; //cavalry=0 infantry=1  archer=2 
+
+    public int level = 1;
+    public int attack = 3;
+    public int defense = 1;
+    public int HpMax = 10;
+    public int Hp = 10;
+    public int SpMax = 10;
+    public int Sp = 10;
+    public int speed;//turn base order
+    public int movingAbility;// number of grid each turn
 
     public int noOfMove;
     public MenuController menuc;
@@ -64,12 +74,6 @@ public class Character : MonoBehaviour {
     Vector2 ChangeCoordinateTofloat(int x, int y)
     {
         return new Vector2((float)(x * 0.5 - 5), (float)(y * -0.5)+5);
-    }
-
-    IEnumerator WaitForTime2()
-    {
-        //SetupGround();
-        yield return new WaitForSeconds(1);
     }
 
     //DrawLine(int myX, int myY, int toX, int toY)
@@ -166,8 +170,10 @@ public class Character : MonoBehaviour {
               //  nextUG.gameObject.GetComponent<Renderer>().material.color = Color.green;
                 this.gameObject.transform.position = ChangeV2toV3(ChangeCoordinateTofloat(nextUG.coordinateX, nextUG.coordinateY));
                 yield return new WaitForSeconds(1f);
-                if (IsReached==true)
+                if (IsReached == true)
+                {
                     Camera.main.gameObject.GetComponent<CameraMovement>().setFly(BS.Characters[BS.RankWhoseTurn(BS.round + 1)].transform.position);
+                }
                     currentX = nextUG.coordinateX; currentY = nextUG.coordinateY;
             }
             else 
@@ -190,20 +196,19 @@ public class Character : MonoBehaviour {
         }
     }
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
-        
-    }
-    /*
-    UnitGround compareResult(UnitGround ug1, UnitGround ug2)
-    {
-        float dis = Mathf.Infinity;
-        foreach(UnitGround ugSon in ug1.neighbourUnit)
+        if(menuc.chooseAttack == true && (BS.AllUnits[currentX,currentY].GetComponent<Renderer>().material.color == Color.red))
         {
-            float newDist = Vector3.Distance(ChangeV2toV3(ChangeCoordinateTofloat
-                (ug.gameObject.GetComponent<UnitGround>().coordinateX, ug.gameObject.GetComponent<UnitGround>().coordinateY)), end);
+            Character Attacker = BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>();
+            Character Suffer = this;
+            int minus = Attacker.attack - Suffer.defense;
+            Debug.Log("Hp: " + (Attacker.attack - Suffer.defense));
+            Suffer.gameObject.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Slider>().value = Suffer.Hp - minus;
 
+            menuc.chooseAttack = false;
+            BS.Restart();
+            menuc.ClickWait();
         }
     }
-    */
 }

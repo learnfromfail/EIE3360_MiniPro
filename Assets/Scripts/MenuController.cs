@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 
 public class MenuController : MonoBehaviour {
-    public backgroundSetting thisStage;
+    public backgroundSetting BS;
 
     public Character WhoCurrentInTurn;
     public List<GameObject> buttonsStored = new List<GameObject>();
@@ -30,7 +30,7 @@ public class MenuController : MonoBehaviour {
     void Start()
     {
         Start1();
-        thisStage = GameObject.Find("EventSystem").GetComponent<backgroundSetting>();
+        BS = GameObject.Find("EventSystem").GetComponent<backgroundSetting>();
     }
 
     void Start1 () {
@@ -53,7 +53,14 @@ public class MenuController : MonoBehaviour {
         for (int i = 0; i < buttonName.Length; i++)
         {
             ParentCanvas.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = buttonName[i];
-            ParentCanvas.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(ClickMove);
+            if(i==0)
+                ParentCanvas.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(ClickMove);
+            if (i == 1)
+                ParentCanvas.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(ClickAttack);
+            if (i == 2) //skill?
+                ParentCanvas.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(ClickAttack);
+            if (i == 3)
+                ParentCanvas.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(ClickWait);
         }
         IsCompletedReveal = false;
 
@@ -172,11 +179,35 @@ public class MenuController : MonoBehaviour {
     public void ClickMove()
     {
         chooseMove = true;
-        thisStage.chooseMove();
+        BS.chooseMove();
+
     }
 
     public void ClickWait()
     {
-        chooseWait = true;
+        StartCoroutine("ClickWaitSupport");
+    }
+
+    IEnumerator ClickWaitSupport()
+    {
+        int fromZero = 0;
+        while (true)
+        {
+            if (fromZero == 0)
+            {
+                BS.round++;
+                Camera.main.gameObject.GetComponent<CameraMovement>().setFly(BS.Characters[BS.RankWhoseTurn(BS.round + 1)].transform.position);
+                break;
+            }
+            fromZero++;
+            yield return new WaitForSeconds(1);
+
+        }
+    }
+
+    public void ClickAttack()
+    {
+        chooseAttack = true;
+        BS.chooseAttack();
     }
 }

@@ -7,7 +7,7 @@ public class UnitGround : MonoBehaviour {
     public static MenuController MC;
     public int coordinateX;
     public int coordinateY;
-    public int groundType = 0; //0 is grassground //1 is mudd //2 obstacle
+    public int groundType = 0; //0 is grassground //1 is mudd //2 obstacle //
     public List<UnitGround> neighbourUnit;
     public int noOfNeigh = 0;
     public bool considered = false;
@@ -74,13 +74,13 @@ public class UnitGround : MonoBehaviour {
         if (coordinateX - 1 >= 0)
             this.neighbourUnit.Add(BS.AllUnits[coordinateX - 1, coordinateY].GetComponent<UnitGround>());
 
-        if (coordinateX + 1 <= 20) 
+        if (coordinateX + 1 <= BS.width) 
             this.neighbourUnit.Add(BS.AllUnits[coordinateX + 1, coordinateY].GetComponent<UnitGround>());
 
         if (coordinateY - 1 >= 0) 
             this.neighbourUnit.Add(BS.AllUnits[coordinateX, coordinateY-1].GetComponent<UnitGround>());
 
-        if (coordinateY + 1 <= 20)
+        if (coordinateY + 1 <= BS.height)
             this.neighbourUnit.Add(BS.AllUnits[coordinateX, coordinateY + 1].GetComponent<UnitGround>());
 
         noOfNeigh = this.neighbourUnit.Count;

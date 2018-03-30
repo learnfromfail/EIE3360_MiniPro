@@ -51,14 +51,14 @@ public class testing : MonoBehaviour {
         //        debug.log("where0");
         //        foreach (unitground furtherpossibleug in possibleug.neighbourunit)
         //        {
-        //            if ((furtherpossibleug.groundtype == 0 && (moverange.contains(furtherpossibleug) == false)) && (consideredug.contains(furtherpossibleug) == false))
+        //            if ((furtherpossibleug.groundtype == 0 && (NaturalRange.contains(furtherpossibleug) == false)) && (consideredug.contains(furtherpossibleug) == false))
         //            {
-        //                moverange.add(furtherpossibleug);
+        //                NaturalRange.add(furtherpossibleug);
         //                debug.log(++addnum);
         //                furtherpossibleug.gameobject.getcomponent<renderer>().material.color = color.cyan;
         //            }
         //        }
-        //        moverange.remove(possibleug);
+        //        NaturalRange.remove(possibleug);
         //        consideredug.add(possibleug);
         //        debug.log("where1");
         //    }

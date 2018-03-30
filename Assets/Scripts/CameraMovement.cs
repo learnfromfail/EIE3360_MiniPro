@@ -24,6 +24,7 @@ public class CameraMovement : MonoBehaviour {
     }
     public void Fly()
     {
+        GameObject.Find("EventSystem").GetComponent<HPbarHandler>().UpdateHPbarRotation();
         //this.transform.LookAt(direction);
         this.transform.position = Vector3.Lerp(this.transform.position, targetHead, 0.05f);
 

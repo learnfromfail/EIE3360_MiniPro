@@ -248,50 +248,79 @@ public class backgroundSetting : MonoBehaviour
     public void chooseMove()//show movable range 
     {
         List<UnitGround> MoveRange = new List<UnitGround>();
-        List<UnitGround> ConsideredUG = new List<UnitGround>();
-        Character currentCharacter = Characters[RankWhoseTurn(round+1)].GetComponent<Character>();
-        UnitGround UnitBeingStepped =  AllUnits[currentCharacter.currentX, currentCharacter.currentY].GetComponent<UnitGround>();
-
-        /*
-        foreach (UnitGround possibleUG in UnitBeingStepped.neighbourUnit)//use 1 movingAbility
+        Character currentCharacter = Characters[RankWhoseTurn(round + 1)].GetComponent<Character>();
+        MoveRange = getNaturalRange(currentCharacter.movingAbility, currentCharacter.currentX, currentCharacter.currentY);
+        foreach (UnitGround ug in MoveRange)
         {
-            if (possibleUG.groundType == 0)
-            {
-                MoveRange.Add(possibleUG);
-                possibleUG.
-            }
+            if (ug.groundType == 0)
+                ug.gameObject.GetComponent<Renderer>().material.color = Color.cyan;
         }
-        */
-        UnitBeingStepped.gameObject.GetComponent<Renderer>().material.color = Color.cyan;
-        MoveRange.Add(UnitBeingStepped);//MoveRange is the list to consider their neighb
-        ConsideredUG.Add(UnitBeingStepped);//ConsideredUG means to object to reconsider the considered unitGround
-        List<UnitGround> SpareList = SpareList = new List<UnitGround>();
+    }
+    public List<UnitGround> getNaturalRange(int range,int startX,int startY)
+    {
+        List<UnitGround> NaturalRange = new List<UnitGround>();
+        List<UnitGround> ConsideredUG = new List<UnitGround>();
+        List<UnitGround> returnRange = new List<UnitGround>();
 
-        int addNum = 0;
-        for (int i = 0; i < currentCharacter.movingAbility/*-1*/; i++)//the -1 comes from the above foreach
+        UnitGround startXY = AllUnits[startX, startY].GetComponent<UnitGround>();
+
+        startXY.gameObject.GetComponent<Renderer>().material.color = Color.cyan;
+        NaturalRange.Add(startXY);//NaturalRange is the list to consider their neighb
+        ConsideredUG.Add(startXY);//ConsideredUG means to object to reconsider the considered unitGround
+        List<UnitGround>  SpareList = new List<UnitGround>();//help to minimise the range 
+        for (int i = 0; i < range; i++)//the -1 comes from the above foreach
         {
-            foreach (UnitGround possibleUG in MoveRange)
+            foreach (UnitGround possibleUG in NaturalRange)
             {
-                
-               // Debug.Log("where0");
                 foreach (UnitGround FurtherPossibleUG in possibleUG.neighbourUnit)
                 {
                     if ((FurtherPossibleUG.groundType == 0 && (SpareList.Contains(FurtherPossibleUG) == false)) && (ConsideredUG.Contains(FurtherPossibleUG) == false))
                     {
-                        //MoveRange.Add(FurtherPossibleUG);
                         SpareList.Add(FurtherPossibleUG);
-                        Debug.Log(++addNum+" "+ FurtherPossibleUG.gameObject.name);
-                        FurtherPossibleUG.gameObject.GetComponent<Renderer>().material.color = Color.cyan;
+                        returnRange.Add(FurtherPossibleUG);
                     }
                 }
-                //MoveRange.Remove(possibleUG);
-                 ConsideredUG.Add(possibleUG);
-                
-               // Debug.Log("where1");
+                ConsideredUG.Add(possibleUG);//avoid double add
             }
-            MoveRange = new List<UnitGround>(SpareList);
+            NaturalRange = new List<UnitGround>(SpareList);
             SpareList.Clear();
         }
-        Debug.Log("where3");
+        return returnRange;
+    }
+
+    public void chooseAttack() //show the attack Range
+    {
+        List<UnitGround> AttackRange = new List<UnitGround>();
+        List<UnitGround> ConsideredUG = new List<UnitGround>();
+        Character currentCharacter = Characters[RankWhoseTurn(round + 1)].GetComponent<Character>();
+        UnitGround UnitBeingStepped = AllUnits[currentCharacter.currentX, currentCharacter.currentY].GetComponent<UnitGround>();
+        if (currentCharacter.career == 0) { //cavalry
+            AttackRange = new List<UnitGround>(AllUnits[currentCharacter.currentX, currentCharacter.currentY].GetComponent<UnitGround>().neighbourUnit);
+        }
+        if (currentCharacter.career == 1) //infantry
+        {
+            AttackRange = new List<UnitGround>(AllUnits[currentCharacter.currentX, currentCharacter.currentY].GetComponent<UnitGround>().neighbourUnit);
+            if (currentCharacter.currentX - 1 > 0 && currentCharacter.currentY - 1 > 0)
+                AttackRange.Add(AllUnits[currentCharacter.currentX - 1, currentCharacter.currentY - 1].GetComponent<UnitGround>());
+            if (currentCharacter.currentX - 1 > 0 && currentCharacter.currentY + 1 < height)
+                AttackRange.Add(AllUnits[currentCharacter.currentX - 1, currentCharacter.currentY + 1].GetComponent<UnitGround>());
+            if (currentCharacter.currentX + 1 > width && currentCharacter.currentY - 1 > 0)
+                AttackRange.Add(AllUnits[currentCharacter.currentX + 1, currentCharacter.currentY - 1].GetComponent<UnitGround>());
+            if (currentCharacter.currentX + 1 > width && currentCharacter.currentY + 1 < height)
+                AttackRange.Add(AllUnits[currentCharacter.currentX + 1, currentCharacter.currentY + 1].GetComponent<UnitGround>());
+        }
+        if (currentCharacter.career == 2) //archer
+        {
+            AttackRange = getNaturalRange(2,currentCharacter.currentX, currentCharacter.currentY);
+            foreach (UnitGround ug in AllUnits[currentCharacter.currentX, currentCharacter.currentY].GetComponent<UnitGround>().neighbourUnit)
+            {
+                AttackRange.Remove(ug);
+            }
+        }
+        foreach (UnitGround ug in AttackRange)
+        {
+            if(ug.groundType == 0)
+                ug.gameObject.GetComponent<Renderer>().material.color = Color.red;
+        }
     }
 }
