@@ -11,9 +11,10 @@ public class UnitGround : MonoBehaviour {
     public List<UnitGround> neighbourUnit;
     public int noOfNeigh = 0;
     public bool considered = false;
+    public bool beingStepped = false;
     // Use this for initialization
-    
 
+    public static bool notblockAnyUI = true;
     public Color orig;
 
     //battlehandling
@@ -34,17 +35,26 @@ public class UnitGround : MonoBehaviour {
     }
    public void OnMouseUp()
     {
-        
-        if (MC.chooseMove == true)
-        {
-            if (this.gameObject.GetComponent<Renderer>().material.color != Color.cyan)
-                return;
-            this.gameObject.GetComponent<Renderer>().material.color = Color.red;
-            BS.round++;
-            BS.Characters[BS.RankWhoseTurn(BS.round)].GetComponent<Character>().Move(coordinateX, coordinateY);
-            MC.chooseMove = false;
-            BS.Restart();
-        }
+        if (notblockAnyUI)
+            if (beingStepped == false ||(MC.chooseAttack == true && beingStepped == true))
+            {
+                if (MC.chooseMove == true)
+                {
+                    if (this.gameObject.GetComponent<Renderer>().material.color != Color.cyan)
+                        return;
+                    this.gameObject.GetComponent<Renderer>().material.color = Color.red;
+                    //BS.round++;
+                    BS.Characters[BS.RankWhoseTurn(BS.round+1)].GetComponent<Character>().Move(coordinateX, coordinateY);
+                    MC.chooseMove = false;
+                    MC.setAllButDisappeared();
+                    MC.BackBut.SetActive(false);
+                    BS.Restart();
+                    //MC.goBack();
+                }
+            }
+            else {
+                Debug.Log("SomeOne Occupied");
+            }
     }
 
     public void setGroundType(int type)

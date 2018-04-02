@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\UnitGround.cs" />
     <Compile Include="Assets\Scripts\backgroundSetting.cs" />
     <Compile Include="Assets\Scripts\testing.cs" />
+    <Compile Include="Assets\minor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

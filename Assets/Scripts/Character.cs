@@ -33,7 +33,7 @@ public class Character : MonoBehaviour {
         BS.UpdateCharacter();
       
         this.gameObject.transform.position = ChangeV2toV3(ChangeCoordinateTofloat(currentX, currentY));
-
+        
         menuc = GameObject.Find("EventSystem").GetComponent<MenuController>();
         
     }
@@ -124,7 +124,7 @@ public class Character : MonoBehaviour {
                     break;
                 }
                 // Debug.Log("name"+ ug.gameObject.name);
-                if (ug.groundType == 2)
+                if (ug.groundType == 2|| ug.beingStepped == true)
                 {
                     // unvisitedNeighbour.Remove(ug);
                     noOfObstacle++;
@@ -172,7 +172,14 @@ public class Character : MonoBehaviour {
                 yield return new WaitForSeconds(1f);
                 if (IsReached == true)
                 {
-                    Camera.main.gameObject.GetComponent<CameraMovement>().setFly(BS.Characters[BS.RankWhoseTurn(BS.round + 1)].transform.position);
+                    BS.AllUnits[par[0], par[1]].GetComponent<UnitGround>().beingStepped = false;
+                    nextUG.beingStepped = true;
+
+                    menuc.goBack();
+                    menuc.buttonsShowed[0].SetActive(false);
+                    //Camera.main.gameObject.GetComponent<CameraMovement>().setFly(BS.Characters[BS.RankWhoseTurn(BS.round + 1)].transform.position);
+                    
+                
                 }
                     currentX = nextUG.coordinateX; currentY = nextUG.coordinateY;
             }
@@ -196,15 +203,18 @@ public class Character : MonoBehaviour {
         }
     }
 
-    public void OnMouseDown()
+    public void OnMouseDown()//Atack people
     {
         if(menuc.chooseAttack == true && (BS.AllUnits[currentX,currentY].GetComponent<Renderer>().material.color == Color.red))
         {
             Character Attacker = BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>();
             Character Suffer = this;
+            /*****
+             * place battle animation
+             * *****/
             int minus = Attacker.attack - Suffer.defense;
             Debug.Log("Hp: " + (Attacker.attack - Suffer.defense));
-            Suffer.gameObject.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Slider>().value = Suffer.Hp - minus;
+            Suffer.gameObject.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Slider>().value -=  minus;
 
             menuc.chooseAttack = false;
             BS.Restart();

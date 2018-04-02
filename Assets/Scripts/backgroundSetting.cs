@@ -14,7 +14,7 @@ public class backgroundSetting : MonoBehaviour
     public int height;
     int Xscale; int Yscale; int Zscale;
     // Use this for initialization
-
+    public MenuController mc;
     public List<GameObject> Characters;
     public int noOfCharacters;
     public int round = 0;
@@ -53,6 +53,7 @@ public class backgroundSetting : MonoBehaviour
         broadtext = GameObject.Find("broadText").GetComponent<Text>();
 
         Camera.main.gameObject.GetComponent<CameraMovement>().setFly(Characters[3].transform.position);//should use a objective
+        mc = GetComponent<MenuController>();
     }
     void Update()
     {
@@ -87,15 +88,20 @@ public class backgroundSetting : MonoBehaviour
                 newUG.GetComponent<UnitGround>().coordinateX = i; newUG.GetComponent<UnitGround>().coordinateY = ii;
                 if (i >= (width / 3) && (ii >= (height / 3) && ii <= (height / 2)))
                     newUG.GetComponent<UnitGround>().setGroundType(2); // set obstacle
-            //    if ((i >= (width / 3) && i <= (width / 2)) && (ii >= (height / 9) && (ii <= height / 4)))
-             //       newUG.GetComponent<UnitGround>().setGroundType(2); // set mud
-              //  if ((i >= (width / 3) && i <= (width / 2)) && (ii >= (11) && (ii <= 17)))
-              //      newUG.GetComponent<UnitGround>().setGroundType(2); // set mud
+                                                                       //    if ((i >= (width / 3) && i <= (width / 2)) && (ii >= (height / 9) && (ii <= height / 4)))
+                                                                       //       newUG.GetComponent<UnitGround>().setGroundType(2); // set mud
+                                                                       //  if ((i >= (width / 3) && i <= (width / 2)) && (ii >= (11) && (ii <= 17)))
+                                                                       //      newUG.GetComponent<UnitGround>().setGroundType(2); // set mud
                 newUG.name = "X" + i + ",Y" + ii;
                 AllUnit.Add(newUG);
                 AllUnits[i, ii] = newUG;
             }
-         setNeighbourGround();
+        setNeighbourGround();
+        for (int i = 0; i < Characters.Count; i++)
+        {
+            Character thisChar = Characters[i].GetComponent<Character>();
+            AllUnits[thisChar.currentX, thisChar.currentY].GetComponent<UnitGround>().beingStepped = true;
+        }
     }
 
     public void setNeighbourGround() // this function fails to work
@@ -276,8 +282,20 @@ public class backgroundSetting : MonoBehaviour
                 {
                     if ((FurtherPossibleUG.groundType == 0 && (SpareList.Contains(FurtherPossibleUG) == false)) && (ConsideredUG.Contains(FurtherPossibleUG) == false))
                     {
-                        SpareList.Add(FurtherPossibleUG);
-                        returnRange.Add(FurtherPossibleUG);
+                        if ((mc.chooseAttack == true))
+                        {
+                            SpareList.Add(FurtherPossibleUG);
+                            returnRange.Add(FurtherPossibleUG);
+                        }
+                        else if ((mc.chooseMove == true) && (FurtherPossibleUG.beingStepped == true))
+                        {
+
+                        }
+                        else
+                        {
+                            SpareList.Add(FurtherPossibleUG);
+                            returnRange.Add(FurtherPossibleUG);
+                        }
                     }
                 }
                 ConsideredUG.Add(possibleUG);//avoid double add

@@ -12,6 +12,8 @@ public class MenuController : MonoBehaviour {
     public List<GameObject> buttonsShowed = new List<GameObject>();
     public List<Vector3> ButtonPosition = new List<Vector3>();
 
+    public GameObject BackBut;
+
     public string[] buttonName = new string[]{ "Move", "Attack", "Skill", "Wait" };
     bool IsCompletedReveal = false;
     int Distancelength = 200;
@@ -40,7 +42,8 @@ public class MenuController : MonoBehaviour {
         fre = 0;
         foreach (GameObject button in buttonsStored)
         {
-            GameObject but =  Instantiate(button);
+          //  GameObject but =  Instantiate(button, new Vector3(1000f,1000f,200f), Quaternion.identity);
+            GameObject but = Instantiate(button);
             but.name = "button No"+nameNo++;
             but.transform.SetParent(ParentCanvas.transform);
             but.GetComponent<RectTransform>().offsetMax = new Vector2(0f, 0f);
@@ -94,7 +97,8 @@ public class MenuController : MonoBehaviour {
                 }
             }
         }
-        
+        if (Input.GetMouseButton(1))
+            goBack();
     }
  
     void Update () {
@@ -178,6 +182,7 @@ public class MenuController : MonoBehaviour {
     
     public void ClickMove()
     {
+        setAllButDisappeared();
         chooseMove = true;
         BS.chooseMove();
 
@@ -190,6 +195,7 @@ public class MenuController : MonoBehaviour {
 
     IEnumerator ClickWaitSupport()
     {
+        setAllButDisappeared();
         int fromZero = 0;
         while (true)
         {
@@ -197,6 +203,7 @@ public class MenuController : MonoBehaviour {
             {
                 BS.round++;
                 Camera.main.gameObject.GetComponent<CameraMovement>().setFly(BS.Characters[BS.RankWhoseTurn(BS.round + 1)].transform.position);
+                goBack();
                 break;
             }
             fromZero++;
@@ -207,7 +214,24 @@ public class MenuController : MonoBehaviour {
 
     public void ClickAttack()
     {
+        setAllButDisappeared();
         chooseAttack = true;
         BS.chooseAttack();
     }
+
+    public void goBack()
+    {
+        BackBut.SetActive(false);
+        foreach (GameObject but in buttonsShowed)
+            but.SetActive(true);
+        BS.Restart();
+
+    }
+    public void setAllButDisappeared()
+    {
+        BackBut.SetActive(true);
+        foreach (GameObject but in buttonsShowed)
+            but.SetActive(false);
+    }
+
 }
