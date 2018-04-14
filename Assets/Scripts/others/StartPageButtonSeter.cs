@@ -15,7 +15,11 @@ public class StartPageButtonSeter : MonoBehaviour {
 		
 	}
 
-    public void LoadAScene() {
+    public void LoadASceneMulti() {
         SceneManager.LoadScene("Lobby");
+    }
+    public void LoadASceneSingle()
+    {
+        SceneManager.LoadScene("SinglePlay");
     }
 }
