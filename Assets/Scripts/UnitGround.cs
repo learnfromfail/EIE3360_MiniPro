@@ -38,24 +38,30 @@ public class UnitGround : MonoBehaviour {
         if (notblockAnyUI)
             if (beingStepped == false ||(MC.chooseAttack == true && beingStepped == true))
             {
-                if (MC.chooseMove == true)
-                {
-                    if (this.gameObject.GetComponent<Renderer>().material.color != Color.cyan)
-                        return;
-                    this.gameObject.GetComponent<Renderer>().material.color = Color.red;
-                    //BS.round++;
-                    BS.Characters[BS.RankWhoseTurn(BS.round+1)].GetComponent<Character>().Move(coordinateX, coordinateY);
-                    MC.chooseMove = false;
-                    MC.setAllButDisappeared();
-                    MC.BackBut.SetActive(false);
-                    BS.Restart();
-                    //MC.goBack();
-                }
+                AIonClickMoveToHere();//normal player also click this
             }
             else {
                 Debug.Log("SomeOne Occupied");
             }
     }
+    //AI part
+    public void AIonClickMoveToHere()
+    {
+        if (MC.chooseMove == true)
+        {
+            if (this.gameObject.GetComponent<Renderer>().material.color != Color.cyan)
+                return;
+            this.gameObject.GetComponent<Renderer>().material.color = Color.red;
+            //BS.round++;
+            BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>().Move(coordinateX, coordinateY);
+            MC.chooseMove = false;
+            MC.setAllButDisappeared();
+            MC.BackBut.SetActive(false);
+            BS.Restart();
+            //MC.goBack();
+        }
+    }
+
 
     public void setGroundType(int type)
     {

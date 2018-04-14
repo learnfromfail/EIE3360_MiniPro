@@ -50,7 +50,7 @@ public class MenuController : MonoBehaviour {
             but.GetComponent<RectTransform>().offsetMin = new Vector2(0f, 0f);
             buttonsShowed.Add(but);
             tempPosition = new Vector3(but.transform.position.x, but.transform.position.y);
-            Debug.Log("tempPosit: " + tempPosition);
+            //Debug.Log("tempPosit: " + tempPosition);
                 //but.transform.parent.position;
         }
         for (int i = 0; i < buttonName.Length; i++)
@@ -182,6 +182,7 @@ public class MenuController : MonoBehaviour {
     
     public void ClickMove()
     {
+        BackBut.SetActive(true);
         setAllButDisappeared();
         chooseMove = true;
         BS.chooseMove();
@@ -196,17 +197,20 @@ public class MenuController : MonoBehaviour {
     IEnumerator ClickWaitSupport()
     {
         setAllButDisappeared();
-        int fromZero = 0;
+        int secondsToWait = 0;
         while (true)
         {
-            if (fromZero == 0)
+            if (secondsToWait == 1)
             {
                 BS.round++;
                 Camera.main.gameObject.GetComponent<CameraMovement>().setFly(BS.Characters[BS.RankWhoseTurn(BS.round + 1)].transform.position);
                 goBack();
+                //AI part
+                if (BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>().IsCompanion == false)
+                    BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Enemy>().AImove();
                 break;
             }
-            fromZero++;
+            secondsToWait++;
             yield return new WaitForSeconds(1);
 
         }
@@ -214,6 +218,7 @@ public class MenuController : MonoBehaviour {
 
     public void ClickAttack()
     {
+        BackBut.SetActive(true);
         setAllButDisappeared();
         chooseAttack = true;
         BS.chooseAttack();
@@ -229,7 +234,6 @@ public class MenuController : MonoBehaviour {
     }
     public void setAllButDisappeared()
     {
-        BackBut.SetActive(true);
         foreach (GameObject but in buttonsShowed)
             but.SetActive(false);
     }

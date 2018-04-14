@@ -35,7 +35,7 @@ public class CameraMovement : MonoBehaviour {
     public void setFly(Vector3 Tar_Pos)
     {
         targetItself = Tar_Pos;
-        targetHead = new Vector3(Tar_Pos.x -5, Tar_Pos.y+10 , Tar_Pos.z -5 );// Tar_Pos;
+        targetHead = new Vector3(Tar_Pos.x -5, Tar_Pos.y+20 , Tar_Pos.z -5 );// Tar_Pos;
         this.transform.LookAt(Tar_Pos);
         NeedChangePos = true;
     }

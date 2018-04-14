@@ -24,7 +24,7 @@ public class HPbarHandler : MonoBehaviour {
             if (fromZero == 4)
                 break;
             fromZero++;
-            Debug.Log("from0: "+fromZero);
+            //Debug.Log("from0: "+fromZero);
             yield return new WaitForSeconds(1);
 
         }

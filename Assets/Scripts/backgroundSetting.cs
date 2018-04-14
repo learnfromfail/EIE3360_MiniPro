@@ -15,7 +15,11 @@ public class backgroundSetting : MonoBehaviour
     int Xscale; int Yscale; int Zscale;
     // Use this for initialization
     public MenuController mc;
+
     public List<GameObject> Characters;
+    public List<GameObject> Enemys;
+    public List<GameObject> Companions;
+
     public int noOfCharacters;
     public int round = 0;
     static int ContinueLoop = 0;
@@ -49,10 +53,10 @@ public class backgroundSetting : MonoBehaviour
         // StartCoroutine("WaitForTime");
         SetupGround();
 
-        turntext = GameObject.Find("TurnText").GetComponent<Text>();
-        broadtext = GameObject.Find("broadText").GetComponent<Text>();
+        //turntext = GameObject.Find("TurnText").GetComponent<Text>();
+        //broadtext = GameObject.Find("broadText").GetComponent<Text>();
 
-        Camera.main.gameObject.GetComponent<CameraMovement>().setFly(Characters[3].transform.position);//should use a objective
+        Camera.main.gameObject.GetComponent<CameraMovement>().setFly(Characters[RankWhoseTurn(round + 1)].transform.position);//should use a objective
         mc = GetComponent<MenuController>();
     }
     void Update()
@@ -123,6 +127,7 @@ public class backgroundSetting : MonoBehaviour
         }
         return new GameObject();
     }
+
     public void ChangeTurnText(int CharID)
     {
         turntext.text = round+" "+ Characters[CharID].GetComponent<Character>().CharName + "s'turn "+ Characters[CharID].GetComponent<Character>().speed;
@@ -131,6 +136,7 @@ public class backgroundSetting : MonoBehaviour
                          Characters[2].GetComponent<Character>().CharName + ": " + rankList[2] + " "+
                          Characters[3].GetComponent<Character>().CharName + ": " + rankList[3];
     }
+
     public void SetupRank()
     {
         rankList = new int[Characters.Count];
@@ -196,7 +202,7 @@ public class backgroundSetting : MonoBehaviour
         Become1DArray(sorted3Array);
         FoundTimes--;
         Debug.Log(round - 1 + " battle Turn: " + BattleOrder[round - 1]);
-        ChangeTurnText(BattleOrder[round - 1]);
+        //ChangeTurnText(BattleOrder[round - 1]);
 
         return BattleOrder[round-1];
     }
@@ -308,11 +314,23 @@ public class backgroundSetting : MonoBehaviour
 
     public void chooseAttack() //show the attack Range
     {
+        foreach (UnitGround ug in GetAttackRange())
+        {
+            if(ug.groundType == 0)
+                ug.gameObject.GetComponent<Renderer>().material.color = Color.red;
+        }
+        //AI part
+        if (Characters[RankWhoseTurn(round + 1)].GetComponent<Character>().IsCompanion == false)
+            Characters[RankWhoseTurn(round + 1)].GetComponent<Enemy>().IsGoNext2 = true; ;
+    }
+    
+    public List<UnitGround> GetAttackRange()
+    {
         List<UnitGround> AttackRange = new List<UnitGround>();
-        List<UnitGround> ConsideredUG = new List<UnitGround>();
         Character currentCharacter = Characters[RankWhoseTurn(round + 1)].GetComponent<Character>();
         UnitGround UnitBeingStepped = AllUnits[currentCharacter.currentX, currentCharacter.currentY].GetComponent<UnitGround>();
-        if (currentCharacter.career == 0) { //cavalry
+        if (currentCharacter.career == 0)
+        { //cavalry
             AttackRange = new List<UnitGround>(AllUnits[currentCharacter.currentX, currentCharacter.currentY].GetComponent<UnitGround>().neighbourUnit);
         }
         if (currentCharacter.career == 1) //infantry
@@ -322,23 +340,19 @@ public class backgroundSetting : MonoBehaviour
                 AttackRange.Add(AllUnits[currentCharacter.currentX - 1, currentCharacter.currentY - 1].GetComponent<UnitGround>());
             if (currentCharacter.currentX - 1 > 0 && currentCharacter.currentY + 1 < height)
                 AttackRange.Add(AllUnits[currentCharacter.currentX - 1, currentCharacter.currentY + 1].GetComponent<UnitGround>());
-            if (currentCharacter.currentX + 1 > width && currentCharacter.currentY - 1 > 0)
+            if (currentCharacter.currentX + 1 < width && currentCharacter.currentY - 1 > 0)
                 AttackRange.Add(AllUnits[currentCharacter.currentX + 1, currentCharacter.currentY - 1].GetComponent<UnitGround>());
-            if (currentCharacter.currentX + 1 > width && currentCharacter.currentY + 1 < height)
+            if (currentCharacter.currentX + 1 < width && currentCharacter.currentY + 1 < height)
                 AttackRange.Add(AllUnits[currentCharacter.currentX + 1, currentCharacter.currentY + 1].GetComponent<UnitGround>());
         }
         if (currentCharacter.career == 2) //archer
         {
-            AttackRange = getNaturalRange(2,currentCharacter.currentX, currentCharacter.currentY);
+            AttackRange = getNaturalRange(2, currentCharacter.currentX, currentCharacter.currentY);
             foreach (UnitGround ug in AllUnits[currentCharacter.currentX, currentCharacter.currentY].GetComponent<UnitGround>().neighbourUnit)
             {
                 AttackRange.Remove(ug);
             }
         }
-        foreach (UnitGround ug in AttackRange)
-        {
-            if(ug.groundType == 0)
-                ug.gameObject.GetComponent<Renderer>().material.color = Color.red;
-        }
+        return AttackRange;
     }
 }

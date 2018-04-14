@@ -7,3 +7,9 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/MultiPlayWithoutLobby.unity
+  - enabled: 1
+    path: Assets/Scenes/SinglePlay.unity
+  - enabled: 1
+    path: Assets/Scenes/MultiPlay.unity
+  - enabled: 1
+    path: Assets/Scenes/Start.unity
