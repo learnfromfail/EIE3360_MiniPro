@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 
-public class CameraMovement : MonoBehaviour {
+public class NWCameraMovement : NetworkBehaviour {
     public bool NeedChangePos = false;
     public Vector3 targetHead = new Vector3();
     public Vector3 targetItself = new Vector3();
     // Use this for initialization
     void Start () {
-		
-	}
+        this.transform.position = new Vector3(0, 10, 0);
+       // this.transform.LookAt(this.transform.parent.transform);
+    }
 	// Update is called once per frame
 	void Update () {
         if (NeedChangePos==true)
