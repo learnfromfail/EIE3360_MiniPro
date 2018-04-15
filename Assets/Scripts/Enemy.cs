@@ -59,17 +59,28 @@ public class Enemy : Character {
                 IsGoNext2 = false;
                 WeakestOne.GetComponent<Character>().OnMouseDown();
                 // IsGoNext3 = true;
-                break;
+                //yield return new WaitForSeconds(5f);
+                //break;
+                IsGoNext4 = false;
+                Debug.Log("hehehe22");
             }
-            if ((IsGoNext3  && (secondsToWait == 1))|| IsGoNext4) // AI pressing next turn
+            if (IsGoNext3 == true)
             {
-               IsGoNext4 = false; IsGoNext3 = false;
+                Debug.Log("hehehe33");
+                 //  IsGoNext3 = false;
+              //  break;
+            }
+
+            if (/*(IsGoNext3  && (secondsToWait == 1))||*/IsGoNext3|| IsGoNext4) // AI pressing next turn
+            {
+                Debug.Log("hehehe44");
+                IsGoNext4 = false; IsGoNext3 = false;
                menuc.ClickWait();
                 break;
             }
 
             secondsToWait++;
-            Debug.Log("secondsToWait" + secondsToWait);
+            //Debug.Log("secondsToWait" + secondsToWait);
             if (secondsToWait == 100) {
                 break;
             }
@@ -95,7 +106,7 @@ public class Enemy : Character {
                // Debug.Log("where2 X:" + memberGrid.coordinateX +",Y: "+ memberGrid.coordinateY);
             }
         }
-        Debug.Log("where3" + TargetGrid.coordinateX + TargetGrid.coordinateY);
+        //Debug.Log("where3" + TargetGrid.coordinateX + TargetGrid.coordinateY);
 
         return TargetGrid;
     }

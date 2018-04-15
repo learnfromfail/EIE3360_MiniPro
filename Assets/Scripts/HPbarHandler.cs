@@ -45,7 +45,7 @@ public class HPbarHandler : MonoBehaviour {
             CharGoHpBar.transform.LookAt(Camera.main.transform);
             CharGoHpBar.transform.GetChild(0).GetChild(0).GetComponent<Slider>().maxValue = charGO.GetComponent<Character>().HpMax;
             CharGoHpBar.transform.GetChild(0).GetChild(0).GetComponent<Slider>().value = charGO.GetComponent<Character>().HpMax;
-            Debug.Log(CharGoHpBar.name+" is");
+            //Debug.Log(CharGoHpBar.name+" is");
         }    
     }
 	// Update is called once per frame

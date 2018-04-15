@@ -1,0 +1,238 @@
+fileFormatVersion: 2
+guid: beefa621c5d6cb244a31d5a7f40330be
+timeCreated: 1523544086
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: polymsh
+    100004: rig:GlobalSRT
+    100006: rig:Head
+    100008: rig:LBicep
+    100010: rig:left_weapon
+    100012: rig:LFootBone1
+    100014: rig:LFootBone2
+    100016: rig:LForearm
+    100018: rig:LHand
+    100020: rig:LShin
+    100022: rig:LShoulder
+    100024: rig:LThigh
+    100026: rig:Lumbar1
+    100028: rig:Lumbar2
+    100030: rig:Neck
+    100032: rig:RBicep
+    100034: rig:RFootBone1
+    100036: rig:RFootBone2
+    100038: rig:RForearm
+    100040: rig:RHand
+    100042: rig:rig
+    100044: rig:right_weapon
+    100046: rig:RShin
+    100048: rig:RShoulder
+    100050: rig:RThigh
+    100052: rig:UpperBody
+    100054: shadow
+    100056: weapon:left_weapon
+    100058: weapon:right_weapon
+    100060: weapon:weapon
+    400000: //RootNode
+    400002: polymsh
+    400004: rig:GlobalSRT
+    400006: rig:Head
+    400008: rig:LBicep
+    400010: rig:left_weapon
+    400012: rig:LFootBone1
+    400014: rig:LFootBone2
+    400016: rig:LForearm
+    400018: rig:LHand
+    400020: rig:LShin
+    400022: rig:LShoulder
+    400024: rig:LThigh
+    400026: rig:Lumbar1
+    400028: rig:Lumbar2
+    400030: rig:Neck
+    400032: rig:RBicep
+    400034: rig:RFootBone1
+    400036: rig:RFootBone2
+    400038: rig:RForearm
+    400040: rig:RHand
+    400042: rig:rig
+    400044: rig:right_weapon
+    400046: rig:RShin
+    400048: rig:RShoulder
+    400050: rig:RThigh
+    400052: rig:UpperBody
+    400054: shadow
+    400056: weapon:left_weapon
+    400058: weapon:right_weapon
+    400060: weapon:weapon
+    2300000: shadow
+    3300000: shadow
+    4300000: shadow
+    4300002: weapon:left_weapon
+    4300004: weapon:right_weapon
+    4300006: polymsh
+    7400000: Idle
+    9500000: //RootNode
+    13700000: polymsh
+    13700002: weapon:left_weapon
+    13700004: weapon:right_weapon
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: mixamo.com
+      firstFrame: 0
+      lastFrame: 76
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: polymsh
+        weight: 1
+      - path: rig:rig
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:LThigh
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:LThigh/rig:LShin
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:LThigh/rig:LShin/rig:LFootBone1
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:LThigh/rig:LShin/rig:LFootBone1/rig:LFootBone2
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1/rig:Lumbar2
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1/rig:Lumbar2/rig:LShoulder
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1/rig:Lumbar2/rig:LShoulder/rig:LBicep
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1/rig:Lumbar2/rig:LShoulder/rig:LBicep/rig:LForearm
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1/rig:Lumbar2/rig:LShoulder/rig:LBicep/rig:LForearm/rig:LHand
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1/rig:Lumbar2/rig:LShoulder/rig:LBicep/rig:LForearm/rig:LHand/rig:left_weapon
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1/rig:Lumbar2/rig:Neck
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1/rig:Lumbar2/rig:Neck/rig:Head
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1/rig:Lumbar2/rig:RShoulder
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1/rig:Lumbar2/rig:RShoulder/rig:RBicep
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1/rig:Lumbar2/rig:RShoulder/rig:RBicep/rig:RForearm
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1/rig:Lumbar2/rig:RShoulder/rig:RBicep/rig:RForearm/rig:RHand
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:Lumbar1/rig:Lumbar2/rig:RShoulder/rig:RBicep/rig:RForearm/rig:RHand/rig:right_weapon
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:RThigh
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:RThigh/rig:RShin
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:RThigh/rig:RShin/rig:RFootBone1
+        weight: 1
+      - path: rig:rig/rig:GlobalSRT/rig:UpperBody/rig:RThigh/rig:RShin/rig:RFootBone1/rig:RFootBone2
+        weight: 1
+      - path: shadow
+        weight: 1
+      - path: weapon:weapon
+        weight: 1
+      - path: weapon:weapon/weapon:left_weapon
+        weight: 1
+      - path: weapon:weapon/weapon:right_weapon
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

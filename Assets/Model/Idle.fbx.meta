@@ -1,0 +1,164 @@
+fileFormatVersion: 2
+guid: e037fdad1ece994458c173719b63dd86
+timeCreated: 1523761075
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Cloth
+    100002: face
+    100004: Helmet
+    100006: HelmetFarbic
+    100008: //RootNode
+    100010: polymsh
+    100012: rig:Cloth
+    100014: rig:Farbic
+    100016: rig:GlobalSRT
+    100018: rig:Head
+    100020: rig:Helmet
+    100022: rig:LBicep
+    100024: rig:left_weapon
+    100026: rig:LFootBone1
+    100028: rig:LFootBone2
+    100030: rig:LForearm
+    100032: rig:LHand
+    100034: rig:LShin
+    100036: rig:LShoulder
+    100038: rig:LThigh
+    100040: rig:Lumbar1
+    100042: rig:Lumbar2
+    100044: rig:Neck
+    100046: rig:RBicep
+    100048: rig:RFootBone1
+    100050: rig:RFootBone2
+    100052: rig:RForearm
+    100054: rig:RHand
+    100056: rig:rig
+    100058: rig:right_weapon
+    100060: rig:RShin
+    100062: rig:RShoulder
+    100064: rig:RThigh
+    100066: rig:UpperBody
+    100068: Sword
+    100070: weapon:left_weapon
+    100072: weapon:weapon
+    400000: Cloth
+    400002: face
+    400004: Helmet
+    400006: HelmetFarbic
+    400008: //RootNode
+    400010: polymsh
+    400012: rig:Cloth
+    400014: rig:Farbic
+    400016: rig:GlobalSRT
+    400018: rig:Head
+    400020: rig:Helmet
+    400022: rig:LBicep
+    400024: rig:left_weapon
+    400026: rig:LFootBone1
+    400028: rig:LFootBone2
+    400030: rig:LForearm
+    400032: rig:LHand
+    400034: rig:LShin
+    400036: rig:LShoulder
+    400038: rig:LThigh
+    400040: rig:Lumbar1
+    400042: rig:Lumbar2
+    400044: rig:Neck
+    400046: rig:RBicep
+    400048: rig:RFootBone1
+    400050: rig:RFootBone2
+    400052: rig:RForearm
+    400054: rig:RHand
+    400056: rig:rig
+    400058: rig:right_weapon
+    400060: rig:RShin
+    400062: rig:RShoulder
+    400064: rig:RThigh
+    400066: rig:UpperBody
+    400068: Sword
+    400070: weapon:left_weapon
+    400072: weapon:weapon
+    4300000: Helmet
+    4300002: HelmetFarbic
+    4300004: polymsh
+    4300006: face
+    4300008: Cloth
+    4300010: Sword
+    7400000: Take 001
+    7400002: mixamo.com
+    9500000: //RootNode
+    13700000: Cloth
+    13700002: face
+    13700004: Helmet
+    13700006: HelmetFarbic
+    13700008: polymsh
+    13700010: Sword
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

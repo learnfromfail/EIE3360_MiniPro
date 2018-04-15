@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 5813906ee52160642a087abc306101fb
+timeCreated: 1522683237
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: FOT-Skip Std
+  fontNames:
+  - FOT-Skip Std
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

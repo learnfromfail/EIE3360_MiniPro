@@ -13,6 +13,7 @@ public class Character : MonoBehaviour {
     public int career; //cavalry=0 infantry=1  archer=2 
 
     public int level = 1;
+    public int expRequired = 0;
     public int attack = 3;
     public int defense = 1;
     public int HpMax = 10;
@@ -21,6 +22,8 @@ public class Character : MonoBehaviour {
     public int Sp = 10;
     public int speed;//turn base order
     public int movingAbility;// number of grid each turn
+    public int[] StateAllDetail;
+    public static string[] StateName = new string[] { "Level", "HpMax", "HP", "SpMax", "SP" , "Attack", "Defense", "Speed", "Moving Ability" };
 
     public int noOfMove;
     public MenuController menuc;
@@ -28,21 +31,17 @@ public class Character : MonoBehaviour {
     public GameObject UImenu;
 
 	void Start () {
+        StateAllDetail = new int[] { level,  HpMax , Hp, SpMax, Sp, attack, defense, speed, movingAbility };
         BS = GameObject.Find("EventSystem").GetComponent<backgroundSetting>();
-
             BS.Characters.Add(this.gameObject);
-
         if (IsCompanion)
             BS.Companions.Add(this.gameObject);
         if (!IsCompanion)
             BS.Enemys.Add(this.gameObject);
-
         BS.UpdateCharacter();
-      
-        this.gameObject.transform.position = ChangeV2toV3(ChangeCoordinateTofloat(currentX, currentY));
-        
+        this.gameObject.transform.position = ChangeV2toV3(ChangeCoordinateTofloat(currentX, currentY));     
         menuc = GameObject.Find("EventSystem").GetComponent<MenuController>();
-        
+
     }
 	void Update () {
         if (Input.GetKeyDown(KeyCode.A))
@@ -81,7 +80,7 @@ public class Character : MonoBehaviour {
     {
         Vector3 start = ChangeV2toV3(ChangeCoordinateTofloat(par[0], par[1])); Vector3 end = ChangeV2toV3(ChangeCoordinateTofloat(par[2], par[3]));
         Debug.DrawLine(start, end, Color.green, 2.0f);
-        float dist = 1000;
+        //float dist = 1000;
         int timesLoop = 0;
         
         List<UnitGround> unvisitedNeighbour = new List<UnitGround>();
@@ -171,15 +170,18 @@ public class Character : MonoBehaviour {
         {
             Character Attacker = BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>();
             Character Suffer = this;
-            /*****
-             * place battle animation
-             * *****/
-            int minus = Attacker.attack - Suffer.defense;
-            Debug.Log("Hp: " + (Attacker.attack - Suffer.defense));
-            Suffer.gameObject.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Slider>().value -=  minus;
+            //
+            BS.BM.StartFight(Attacker.gameObject, Suffer.gameObject);
+            //
+            //int minus = Attacker.attack - Suffer.defense;
+            //Debug.Log("Hp: " + (Attacker.attack - Suffer.defense));
+            //Suffer.gameObject.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Slider>().value -=  minus;
             menuc.chooseAttack = false;
-            BS.Restart();
-            menuc.ClickWait();
+         //   if (BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>().IsCompanion == true)
+         //   {
+          //      BS.Restart();
+          //      menuc.ClickWait();
+         //   }
         }
     }
 

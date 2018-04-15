@@ -12,9 +12,10 @@ public class MenuController : MonoBehaviour {
     public List<GameObject> buttonsShowed = new List<GameObject>();
     public List<Vector3> ButtonPosition = new List<Vector3>();
 
-    public GameObject BackBut;
+    public GameObject BackBut; // drag and drop => therefore can set True And false
+    public GameObject stateCanvas; // Start( GameObject.Find()), therefore must be set Active to be found
 
-    public string[] buttonName = new string[]{ "Move", "Attack", "Skill", "Wait" };
+    string[] buttonName = new string[]{ "Move", "Attack", "Skill","State", "Wait" };
     bool IsCompletedReveal = false;
     int Distancelength = 200;
     float MoveSpeed = 1.0f;
@@ -27,8 +28,10 @@ public class MenuController : MonoBehaviour {
     public bool chooseMove = false;
     public bool chooseAttack = false;
     public bool chooseSkill = false;
+    public bool chooseState = false;
     public bool chooseWait = false;
 
+    int stateNumber = 0;
     void Start()
     {
         Start1();
@@ -56,13 +59,15 @@ public class MenuController : MonoBehaviour {
         for (int i = 0; i < buttonName.Length; i++)
         {
             ParentCanvas.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = buttonName[i];
-            if(i==0)
+            if (i == 0)
                 ParentCanvas.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(ClickMove);
             if (i == 1)
                 ParentCanvas.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(ClickAttack);
             if (i == 2) //skill?
                 ParentCanvas.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(ClickAttack);
             if (i == 3)
+                ParentCanvas.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(ClickState);
+            if (i == 4)
                 ParentCanvas.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(ClickWait);
         }
         IsCompletedReveal = false;
@@ -75,12 +80,12 @@ public class MenuController : MonoBehaviour {
         {
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                timesPress++;
+                timesPress++;// CN
                 IsArrived = false;
             }
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                timesPress += 3;
+                timesPress += buttonsShowed.Count -1 ; // CN
                 IsArrived = false;
             }
         }
@@ -90,14 +95,14 @@ public class MenuController : MonoBehaviour {
             for (int i = 0; i < buttonsShowed.Count; i++)
             {
                 brt0 = buttonsShowed[i].GetComponent<RectTransform>().transform.position;
-                buttonsShowed[i].GetComponent<RectTransform>().transform.position = Vector3.Lerp(brt0, ButtonPosition[((timesPress % 4) + i)% 4], MoveSpeed * Time.deltaTime + 0.2f);
-                if (Vector3.Distance(brt0, ButtonPosition[((timesPress % 4) + i) % 4]) <= 5)
+                buttonsShowed[i].GetComponent<RectTransform>().transform.position = Vector3.Lerp(brt0, ButtonPosition[((timesPress % /*4*/ 5) + i) % /*4*/ 5], MoveSpeed * Time.deltaTime + 0.2f);
+                if (Vector2.Distance(brt0, ButtonPosition[((timesPress % /*4*/ buttonsShowed.Count) + i) %/* 4*/buttonsShowed.Count]) <= 5)
                 {
                     IsArrived = true;
                 }
             }
         }
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1))//right key
             goBack();
     }
  
@@ -124,10 +129,10 @@ public class MenuController : MonoBehaviour {
        //         buttonsShowed[0].GetComponent<RectTransform>().position= new Vector3(button.transform.position.x, Mathf.Abs(button.GetComponent<RectTransform>().position.y));
           //      rt.sizeDelta = new Vector2(40, 40);
           //  else
-                rt.sizeDelta = new Vector2(100,30);
+                rt.sizeDelta = new Vector2(70,30);
         //    Debug.Log(button.name+": this distance is: "+Vector2.Distance(rt.position, targetPos)+", target position: "+ targetPos+", with current"+rt.position);
             i++;
-            if (Vector2.Distance(rt.position, targetPos) >=200f) {
+            if (Vector2.Distance(rt.position, targetPos) >=300f) {
                 fre++;
                 if (fre == buttonsShowed.Count - 1) { 
                     Debug.Log("Finished: "+ Vector2.Distance(rt.position, targetPos)+",i am button: "+button.name+" at: "+button.transform.position+", rt po: "+ rt.position);
@@ -139,6 +144,18 @@ public class MenuController : MonoBehaviour {
             
         }
     }
+    public void ReGenerateNenu()
+    {
+        fre = 0;
+        foreach (GameObject button in buttonsShowed)
+        {
+            button.transform.position = new Vector3(226, 158);
+        }
+        IsCompletedReveal = false;
+        tempPosition =  Vector3.zero;
+        SetButtonAndSlide();
+    }
+
     Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, float angle)
     {
         Vector3 targetPoint = point - pivot;
@@ -186,7 +203,16 @@ public class MenuController : MonoBehaviour {
         setAllButDisappeared();
         chooseMove = true;
         BS.chooseMove();
+    }
 
+    public void ClickState()
+    {
+        BackBut.SetActive(true);
+        setAllButDisappeared();
+        chooseState = true;
+        BS.chooseState(); //white all the stepped grid
+        UpdateDetailsAndShowState(BS.RankWhoseTurn(BS.round + 1));
+        stateCanvas.SetActive(true);
     }
 
     public void ClickWait()
@@ -227,6 +253,9 @@ public class MenuController : MonoBehaviour {
     public void goBack()
     {
         BackBut.SetActive(false);
+        stateCanvas.SetActive(false);//for clicking state
+        setAllBoolFalse();
+        stateNumber = 0;
         foreach (GameObject but in buttonsShowed)
             but.SetActive(true);
         BS.Restart();
@@ -237,5 +266,33 @@ public class MenuController : MonoBehaviour {
         foreach (GameObject but in buttonsShowed)
             but.SetActive(false);
     }
+    public void setAllBoolFalse()
+    {
+         chooseMove = false;
+         chooseAttack = false;
+         chooseSkill = false;
+         chooseState = false;
+         chooseWait = false;
+    }
 
+    public void UpdateDetailsAndShowState(int who)
+    {
+        Character thisCharacter = BS.Characters[who].GetComponent<Character>();
+        for(int i = 0;i< stateCanvas.transform.GetChild(0).childCount ; i++)
+        {
+            if (i == 0)//picture
+                continue;
+            else if (i == 1) //name
+                stateCanvas.transform.GetChild(0).GetChild(i).GetComponentInChildren<Text>().text = "Name : " + thisCharacter.CharName;
+            else
+                stateCanvas.transform.GetChild(0).GetChild(i).GetComponentInChildren<Text>().text = Character.StateName[i - 2] + ": " + thisCharacter.StateAllDetail[i-2];
+        }
+    }
+
+    public void ChangeContentOfState()
+    {
+        stateNumber++; 
+        Camera.main.gameObject.GetComponent<CameraMovement>().setFly(BS.Characters[stateNumber% BS.Characters.Count].transform.position);//should use a objective
+        UpdateDetailsAndShowState(stateNumber % BS.Characters.Count);
+    }
 }

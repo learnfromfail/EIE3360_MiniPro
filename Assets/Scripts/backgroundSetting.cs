@@ -35,8 +35,11 @@ public class backgroundSetting : MonoBehaviour
     public int switchTurn = 0;
 
     public Camera main_camera;
+    public BattleManager BM;
+
     void Start()
     {
+        BM = GameObject.Find("BattleManager").GetComponent<BattleManager>();
         main_camera = Camera.main;
 
         AllUnit = new List<GameObject>();
@@ -49,6 +52,7 @@ public class backgroundSetting : MonoBehaviour
         Yscale = (int)BackGround.transform.localScale.y;
         Zscale = (int)BackGround.transform.localScale.z;
         UnitG = GameObject.Find("UnitGround");
+
         //UnitG.transform.position = new Vector3((BackGround.transform.position.x) * Xscale, (BackGround.transform.position.y) * Yscale, (BackGround.transform.position.z + 5) * Zscale);
         // StartCoroutine("WaitForTime");
         SetupGround();
@@ -197,11 +201,11 @@ public class backgroundSetting : MonoBehaviour
                 }
             }
         }
-        Debug.Log("We have added: " + messa);
+        //Debug.Log("We have added: " + messa);
         sorted3Array = SetOrder(theComing3Array);//refresh every turn
         Become1DArray(sorted3Array);
         FoundTimes--;
-        Debug.Log(round - 1 + " battle Turn: " + BattleOrder[round - 1]);
+        //Debug.Log(round - 1 + " battle Turn: " + BattleOrder[round - 1]);
         //ChangeTurnText(BattleOrder[round - 1]);
 
         return BattleOrder[round-1];
@@ -219,7 +223,7 @@ public class backgroundSetting : MonoBehaviour
                 ListEle += " " + element;
             }
         }
-        Debug.Log(ListEle);
+        //Debug.Log(ListEle); // show the turn order
     }
 
     public Queue<Queue<int>> SetOrder(List<List<int>> Array3)
@@ -354,5 +358,11 @@ public class backgroundSetting : MonoBehaviour
             }
         }
         return AttackRange;
+    }
+    
+    public void chooseState()
+    {
+        foreach(GameObject each in Characters)
+            AllUnits[each.GetComponent<Character>().currentX, each.GetComponent<Character>().currentY].GetComponent<Renderer>().material.color = Color.white;
     }
 }

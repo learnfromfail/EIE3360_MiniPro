@@ -36,18 +36,25 @@ public class UnitGround : MonoBehaviour {
    public void OnMouseUp()
     {
         if (notblockAnyUI)
-            if (beingStepped == false ||(MC.chooseAttack == true && beingStepped == true))
+        {
+            if (beingStepped == false || (MC.chooseAttack == true && beingStepped == true))
             {
                 AIonClickMoveToHere();//normal player also click this
             }
-            else {
-                Debug.Log("SomeOne Occupied");
+            /*
+            if (MC.chooseState == true)
+            {
+                MC.UpdateDetailsAndShowState(coordinateX, coordinateY);
+                // Camera.main.GetComponent<CameraMovement>().NeedChangePos2 = true;
+                // Camera.main.GetComponent<CameraMovement>().statePos = this.transform.position;
             }
+            */
+        }
     }
-    //AI part
+    //AI part & player together
     public void AIonClickMoveToHere()
     {
-        if (MC.chooseMove == true)
+        if (MC.chooseMove == true)//AI cam use
         {
             if (this.gameObject.GetComponent<Renderer>().material.color != Color.cyan)
                 return;
@@ -60,6 +67,7 @@ public class UnitGround : MonoBehaviour {
             BS.Restart();
             //MC.goBack();
         }
+
     }
 
 
