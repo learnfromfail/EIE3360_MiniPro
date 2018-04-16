@@ -52,6 +52,14 @@ public class DiceManager : MonoBehaviour {
         */
     }
 	
+    public static void SetValuesZero()
+    {
+             ATKDiceResult = 0;
+             DEFDiceResult = 0;
+             ReATKDiceResult = 0;
+            ReDEFDiceResult = 0;
+            ReResult = 0;
+}
     public IEnumerator RollATK()
     {
         int diceNum = BS.BM.OffenseCharacterATK;

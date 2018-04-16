@@ -5,21 +5,22 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour {
 
     //Data from last scene
+    public GameObject BattleCamera;
 
     public /*static*/ string OffenseCharacterType;
     public /*static*/ string DefenseCharacterType;
 
-    public /*static*/ int OffenseCharacterATK = 0;
-    public /*static*/ int OffenseCharacterDEF = 0;
+    public /*static*/ int OffenseCharacterATK ;
+    public /*static*/ int OffenseCharacterDEF ;
 
-    public /*static*/ int DefenseCharacterATK = 0;
-    public /*static*/ int DefenseCharacterDEF = 0;
+    public /*static*/ int DefenseCharacterATK ;
+    public /*static*/ int DefenseCharacterDEF ;
 
-    public /*static*/ int OffenseCharacterMaxHP = 0;
-    public /*static*/ int OffenseCharacterCurrentHP = 0;
+    public /*static*/ int OffenseCharacterMaxHP ;
+    public /*static*/ int OffenseCharacterCurrentHP ;
 
-    public /*static*/ int DefenseCharacterMaxHP = 0;
-    public /*static*/ int DefenseCharacterCurrentHP = 0;
+    public /*static*/ int DefenseCharacterMaxHP ;
+    public /*static*/ int DefenseCharacterCurrentHP ;
 
     public /*static*/ bool rangeATK;
 
@@ -27,6 +28,9 @@ public class BattleManager : MonoBehaviour {
 
     public  /*static*/ GameObject player1;
     public /*static*/ GameObject player2;
+
+    public Character p1atker;
+    public Character p2defer;
 
     public int attackTurn;
     public GameObject OffenseCharacter;
@@ -51,13 +55,16 @@ public class BattleManager : MonoBehaviour {
     }
 
 
-    public void StartFight(GameObject player01, GameObject player02)
+    public void StartFight(GameObject attacker, GameObject defender)
     {
         //Use for initialization, get data from last scene
         //Now just sub something into it
+        DiceManager.SetValuesZero();
         IsFighting = true;
         fightingUI.SetActive(true);
-        checkSoliderType(player01.GetComponent<Character>(), player02.GetComponent<Character>());
+        Camera.main.gameObject.SetActive(false);
+        BattleCamera.SetActive(true);
+        checkSoliderType(attacker.GetComponent<Character>(), defender.GetComponent<Character>());
   
         //Declare 2 characters and play animation
         player1 = Instantiate(OffenseCharacter, GameObject.Find("positionP1").transform.position, Quaternion.Euler(new Vector3(0, 90, 0))) as GameObject;
@@ -71,16 +78,19 @@ public class BattleManager : MonoBehaviour {
 
         if (OffenseCharacterType == "EnglandArcher" || OffenseCharacterType == "FranceArcher")
         {
+            GameObject.Find("BattleManager").GetComponent<HealthManager>().AssignHPvaluesFromMap();
             player1.GetComponent<BattleAnimation>().StartCoroutine("ArcherAttack");
             Debug.Log("here11111");
         }
         if (OffenseCharacterType == "EnglandCavalry" || OffenseCharacterType == "FranceCavalry")
         {
+            GameObject.Find("BattleManager").GetComponent<HealthManager>().AssignHPvaluesFromMap();
             player1.GetComponent<BattleAnimation>().StartCoroutine("CavalryAttack");
             Debug.Log("here12222");
         }
         if (OffenseCharacterType == "EnglandInfantry" || OffenseCharacterType == "FranceInfantry")
         {
+            GameObject.Find("BattleManager").GetComponent<HealthManager>().AssignHPvaluesFromMap();
             player1.GetComponent<BattleAnimation>().StartCoroutine("InfantryAttack");
             Debug.Log("here1222233333");
         }
@@ -89,16 +99,19 @@ public class BattleManager : MonoBehaviour {
         {
             if (DefenseCharacterType == "EnglandArcher" || DefenseCharacterType == "FranceArcher")
             {
+                GameObject.Find("BattleManager").GetComponent<HealthManager>().AssignHPvaluesFromMap();
                 player2.GetComponent<BattleAnimation>().StartCoroutine("ArcherRetaliate");
                 Debug.Log("here44444");
             }
             if (DefenseCharacterType == "EnglandCavalry" || DefenseCharacterType == "FranceCavalry")
             {
+                GameObject.Find("BattleManager").GetComponent<HealthManager>().AssignHPvaluesFromMap();
                 player2.GetComponent<BattleAnimation>().StartCoroutine("CavalryRetaliate");
                 Debug.Log("here5555");
             }
             if (DefenseCharacterType == "EnglandInfantry" || DefenseCharacterType == "FranceInfantry")
             {
+                GameObject.Find("BattleManager").GetComponent<HealthManager>().AssignHPvaluesFromMap();
                 player2.GetComponent<BattleAnimation>().StartCoroutine("InfantryRetaliate");
                 Debug.Log("here66666");
             }
@@ -132,16 +145,22 @@ public class BattleManager : MonoBehaviour {
         {
             DefenseCharacter = FranceArcher; DefenseCharacterType = "FranceArcher";
         }
-
+        p1atker = p1;
+        p2defer = p2;
         OffenseCharacterATK = p1.attack;
         OffenseCharacterDEF = p1.defense;
         DefenseCharacterATK = p2.attack;
         DefenseCharacterDEF = p2.defense;
 
-        OffenseCharacterMaxHP = p1.HpMax;
+
+
+        OffenseCharacterMaxHP = p1.Hp;
         OffenseCharacterCurrentHP = p1.Hp;
-        DefenseCharacterMaxHP = p2.HpMax;
+        DefenseCharacterMaxHP = p2.Hp;
         DefenseCharacterCurrentHP = p2.Hp;
+
+        gameObject.GetComponent<HealthManager>().UpdateTextValue(p1,p2);
+
 
         if ((p1.career == 2 && p2.career == 0) || (p1.career == 2 && p2.career == 1))
             rangeATK = true;

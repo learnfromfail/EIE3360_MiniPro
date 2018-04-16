@@ -118,19 +118,8 @@ public class BattleAnimation : MonoBehaviour {
         //Change to enemy's attack round
         GameObject.Find("BattleManager").GetComponent<BattleManager>().attackTurn = anotherPlayerId;
         Destroy(TempSlashParticle);
-        if (retaliate)
-        {   
-            if (BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>().IsCompanion==false)
-            BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Enemy>().IsGoNext3 = true;
-            else
-            {
-                BS.Restart();
-                BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>().menuc.ClickWait();
-            }
-            BS.BM.fightingUI.SetActive(false);
-            Destroy(BS.BM.player1);
-            Destroy(BS.BM.player2);
-        }
+        TuneCamera();
+
     }
 
     public IEnumerator InfantryRetaliate()
@@ -217,19 +206,7 @@ public class BattleAnimation : MonoBehaviour {
         //Change to enemy's attack round
         GameObject.Find("BattleManager").GetComponent<BattleManager>().attackTurn = anotherPlayerId;
         Destroy(TempSlashParticle);
-        if (retaliate)
-        {
-            if (BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>().IsCompanion == false)
-                BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Enemy>().IsGoNext3 = true;
-            else
-            {
-                BS.Restart();
-                BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>().menuc.ClickWait();
-            }
-            BS.BM.fightingUI.SetActive(false);
-            Destroy(BS.BM.player1);
-            Destroy(BS.BM.player2);
-        }
+        TuneCamera();
 
     }
 
@@ -309,19 +286,7 @@ public class BattleAnimation : MonoBehaviour {
         //Change to enemy's attack round
         GameObject.Find("BattleManager").GetComponent<BattleManager>().attackTurn = anotherPlayerId;
         Destroy(TempSlashParticle);
-        if (retaliate)
-        {
-            if (BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>().IsCompanion == false)
-                BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Enemy>().IsGoNext3 = true;
-            else
-            {
-                BS.Restart();
-                BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>().menuc.ClickWait();
-            }
-            BS.BM.fightingUI.SetActive(false);
-            Destroy(BS.BM.player1);
-            Destroy(BS.BM.player2);
-        }
+        TuneCamera();
     }
 
     public IEnumerator ArcherRetaliate()
@@ -341,6 +306,7 @@ public class BattleAnimation : MonoBehaviour {
     */
 
     public void DealDamage(){
+       
         int damage;
         if (playerId == 1)
         {
@@ -361,5 +327,40 @@ public class BattleAnimation : MonoBehaviour {
             GameObject.Find("BattleManager").GetComponent<HealthManager>().Damage(anotherPlayerId, damage);
             GameObject.Find("BattleManager").GetComponent<HealthManager>().Damage(playerId, DiceManager.ReResult);
         }  
+    }
+
+    public void TuneCamera()
+    {
+        if (BS.BM.rangeATK == true)
+        {
+            retaliate = false;
+            if (BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>().IsCompanion == false)
+                BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Enemy>().IsGoNext3 = true;
+            else
+            {
+                BS.Restart();
+                BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>().menuc.ClickWait();
+            }
+            BS.main_camera.gameObject.SetActive(true);
+            BS.BM.BattleCamera.SetActive(false);
+            BS.BM.fightingUI.SetActive(false);
+            Destroy(BS.BM.player1);
+            Destroy(BS.BM.player2);
+        }else if (retaliate)
+            {
+                retaliate = false;
+                if (BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>().IsCompanion == false)
+                    BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Enemy>().IsGoNext3 = true;
+                else
+                {
+                    BS.Restart();
+                    BS.Characters[BS.RankWhoseTurn(BS.round + 1)].GetComponent<Character>().menuc.ClickWait();
+                }
+                BS.main_camera.gameObject.SetActive(true);
+                BS.BM.BattleCamera.SetActive(false);
+                BS.BM.fightingUI.SetActive(false);
+                Destroy(BS.BM.player1);
+                Destroy(BS.BM.player2);
+            }
     }
 }

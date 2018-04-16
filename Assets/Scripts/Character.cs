@@ -12,24 +12,28 @@ public class Character : MonoBehaviour {
     public bool IsCompanion = true; //false will be enemy
     public int career; //cavalry=0 infantry=1  archer=2 
 
-    public int level = 1;
-    public int expRequired = 0;
-    public int attack = 3;
-    public int defense = 1;
-    public int HpMax = 10;
-    public int Hp = 10;
-    public int SpMax = 10;
-    public int Sp = 10;
+    public int level ;
+    public int expRequired ;
+    public int attack ;
+    public int defense ;
+    public int HpMax ;
+    public int Hp ;
+    public int SpMax ;
+    public int Sp ;
     public int speed;//turn base order
     public int movingAbility;// number of grid each turn
     public int[] StateAllDetail;
     public static string[] StateName = new string[] { "Level", "HpMax", "HP", "SpMax", "SP" , "Attack", "Defense", "Speed", "Moving Ability" };
 
+    public bool UpPosition = false;
+    public UnitGround UpdateUnit;
+
     public int noOfMove;
     public MenuController menuc;
     //
     public GameObject UImenu;
-
+    //
+    public CharacterAnimator ModelMovement;
 	void Start () {
         StateAllDetail = new int[] { level,  HpMax , Hp, SpMax, Sp, attack, defense, speed, movingAbility };
         BS = GameObject.Find("EventSystem").GetComponent<backgroundSetting>();
@@ -47,6 +51,14 @@ public class Character : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.A))
             touches();
 
+        if (UpPosition == true)
+        {
+            Vector3 targetPos = ChangeV2toV3(ChangeCoordinateTofloat(UpdateUnit.coordinateX, UpdateUnit.coordinateY));
+            transform.position = Vector3.Lerp(transform.position, targetPos, 0.2f);
+            if (Vector3.Distance(transform.position, targetPos) < 1)
+                UpPosition = false;
+        }
+
     }
     private void OnMouseOver()
     {
@@ -62,7 +74,10 @@ public class Character : MonoBehaviour {
     }
 
     public void Move(int x,int y)
-    {
+    {   
+        //
+        ModelMovement.MoveAnimation(true);
+        //
         int[] parms = new int[4] { currentX, currentY, x, y };
         StartCoroutine("DrawLine",parms);
     }
@@ -95,7 +110,7 @@ public class Character : MonoBehaviour {
             int noOfObstacle = 0, noOfVisited = 0;
             float oldDist = Mathf.Infinity;
             foreach (UnitGround ug in nextUG.neighbourUnit)
-            {
+            { 
                 timesLoop++;
                 if ((ug.coordinateX == par[2] && ug.coordinateY == par[3]) || timesLoop > 2000) {
                     Debug.Log("times: " + timesLoop + ", to " + end + " from " + ug.gameObject.transform.position);
@@ -134,7 +149,11 @@ public class Character : MonoBehaviour {
                 path.Add(nextUG);
                 visitedUGs.Add(nextUG);
                 unvisitedNeighbour.Remove(nextUG);
-                this.gameObject.transform.position = ChangeV2toV3(ChangeCoordinateTofloat(nextUG.coordinateX, nextUG.coordinateY));
+                //
+                UpPosition = true;
+                UpdateUnit = nextUG;
+               // this.gameObject.transform.position = ChangeV2toV3(ChangeCoordinateTofloat(nextUG.coordinateX, nextUG.coordinateY));
+                //
                 yield return new WaitForSeconds(0.5f);
                 if (IsReached == true)
                 {
@@ -142,6 +161,9 @@ public class Character : MonoBehaviour {
                     nextUG.beingStepped = true;
                     if (IsCompanion)
                     {
+                        //
+                        ModelMovement.MoveAnimation(false);
+                        //
                         menuc.goBack();
                         menuc.buttonsShowed[0].SetActive(false);
                     }
@@ -172,6 +194,7 @@ public class Character : MonoBehaviour {
             Character Suffer = this;
             //
             BS.BM.StartFight(Attacker.gameObject, Suffer.gameObject);
+            BS.mc.BackBut.SetActive(false);
             //
             //int minus = Attacker.attack - Suffer.defense;
             //Debug.Log("Hp: " + (Attacker.attack - Suffer.defense));
@@ -184,5 +207,7 @@ public class Character : MonoBehaviour {
          //   }
         }
     }
+
+
 
 }

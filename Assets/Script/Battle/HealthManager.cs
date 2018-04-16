@@ -43,21 +43,78 @@ public class HealthManager : MonoBehaviour {
         */
     }
 
+    public void AssignHPvaluesFromMap()
+    {
+        player1MaxHP = BS.BM.OffenseCharacterMaxHP;
+        player1CurrentHP = BS.BM.OffenseCharacterCurrentHP;
+
+        player2MaxHP = BS.BM.DefenseCharacterMaxHP;
+        player2CurrentHP = BS.BM.DefenseCharacterCurrentHP;
+
+        player1HealthText.text = player1MaxHP.ToString();
+        player1CurrentShowingHP = player1MaxHP;
+
+        player2HealthText.text = player2MaxHP.ToString();
+        player2CurrentShowingHP = player2MaxHP;
+    }
+
+    public void AssignBackValuesAfterBattle()
+    { //   BS.BM.OffenseCharacterMaxHP =  player1MaxHP;
+        BS.BM.p1atker.Hp = player1CurrentHP;
+        BS.BM.p2defer.Hp = player2CurrentHP;
+        //  BS.BM.DefenseCharacterMaxHP = player2MaxHP;
+
+        /*
+        player1HealthText.text  player1MaxHP.ToString();
+        player1CurrentShowingHP = player1MaxHP;
+
+        player2HealthText.text = player2MaxHP.ToString();
+        player2CurrentShowingHP = player2MaxHP;
+        */
+    }
+
     public void Damage(int playerId, int damage)
     {
+        //AssignHPvalues();
+      
         if (playerId == 1)
         {
             player1CurrentHP -= damage;
             StartCoroutine("P1LerpHealthBar");
             StartCoroutine("P1LerpHealthText", damage);
+            Debug.Log("Damage is :" + damage);
+            AssignBackValuesAfterBattle();
+
         }
         else if (playerId == 2)
         {
             player2CurrentHP -= damage;
             StartCoroutine("P2LerpHealthBar");
             StartCoroutine("P2LerpHealthText", damage);
+            Debug.Log("Damage is :" + damage);
+            //  AssignBackValuesAfterBattle();
+            AssignBackValuesAfterBattle();
         }
+
     }
+    public void UpdateTextValue(Character p1, Character p2)
+    {
+        AssignCorrectBar(p1,p2);
+        //  StartCoroutine("P1LerpHealthBar");
+        StartCoroutine("P1LerpHealthText", 0);
+      //  StartCoroutine("P2LerpHealthBar");
+        StartCoroutine("P2LerpHealthText", 0);
+
+    }
+    public void AssignCorrectBar(Character p1, Character p2)
+    {
+       // float targetPosition = (float)player1CurrentHP / (float)player1MaxHP;
+
+        player1HealthBar.fillAmount = (float)p1.Hp / (float)p1.HpMax;
+        player2HealthBar.fillAmount = (float)p2.Hp / (float)p2.HpMax;
+
+    }
+
 
     IEnumerator P1LerpHealthBar()
     {
