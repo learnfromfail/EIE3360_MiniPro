@@ -1225,6 +1225,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 54624017734502894, guid: 6292241d5231543499a4573b5a9bf316,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6292241d5231543499a4573b5a9bf316, type: 2}
   m_IsPrefabParent: 0
@@ -1707,6 +1712,11 @@ Prefab:
       propertyPath: m_AABB.m_Extent.z
       value: 0.028063139
       objectReference: {fileID: 0}
+    - target: {fileID: 54612783079967452, guid: e5498551424bbf54f9b3b9e1989f6316,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e5498551424bbf54f9b3b9e1989f6316, type: 2}
   m_IsPrefabParent: 0
@@ -2006,6 +2016,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 54511289177402922, guid: 07d6ff4c21198af42831b5e95a47c6d7,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 07d6ff4c21198af42831b5e95a47c6d7, type: 2}
   m_IsPrefabParent: 0
@@ -2040,7 +2055,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 515481913}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -22.6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2052,7 +2067,7 @@ Transform:
   - {fileID: 428368640}
   m_Father: {fileID: 0}
   m_RootOrder: 22
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &517879018
 GameObject:
   m_ObjectHideFlags: 0
@@ -3505,6 +3520,7 @@ GameObject:
   - component: {fileID: 807833186}
   - component: {fileID: 807833185}
   - component: {fileID: 807833190}
+  - component: {fileID: 807833191}
   m_Layer: 0
   m_Name: Enemy (0)
   m_TagString: Untagged
@@ -3552,6 +3568,8 @@ MonoBehaviour:
   speed: 30
   movingAbility: 4
   StateAllDetail: 
+  UpPosition: 0
+  UpdateUnit: {fileID: 0}
   noOfMove: 0
   menuc: {fileID: 0}
   UImenu: {fileID: 0}
@@ -3648,6 +3666,8 @@ MonoBehaviour:
   speed: 50
   movingAbility: 4
   StateAllDetail: 
+  UpPosition: 0
+  UpdateUnit: {fileID: 0}
   noOfMove: 0
   menuc: {fileID: 0}
   UImenu: {fileID: 0}
@@ -3658,6 +3678,24 @@ MonoBehaviour:
   IsGoNext3: 0
   IsGoNext4: 0
   WeakestOne: {fileID: 0}
+--- !u!114 &807833191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 807833183}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47ca80b957d3f384eb58d726745bb4d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnglandArcher: {fileID: 561737020}
+  EnglandCavalry: {fileID: 327142332}
+  EnglandInfantry: {fileID: 1302228793}
+  FranceArcher: {fileID: 375857308}
+  FranceCavalry: {fileID: 553156798}
+  FranceInfantry: {fileID: 1658226564}
+  Model: {fileID: 0}
 --- !u!1001 &819320754
 Prefab:
   m_ObjectHideFlags: 0
@@ -3799,6 +3837,11 @@ Prefab:
       propertyPath: m_AABB.m_Center.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 54020960537043244, guid: dc81715eed92f934c8271b23814b4994,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc81715eed92f934c8271b23814b4994, type: 2}
   m_IsPrefabParent: 0
@@ -3932,6 +3975,8 @@ MonoBehaviour:
   speed: 20
   movingAbility: 3
   StateAllDetail: 
+  UpPosition: 0
+  UpdateUnit: {fileID: 0}
   noOfMove: 0
   menuc: {fileID: 0}
   UImenu: {fileID: 0}
@@ -4284,6 +4329,7 @@ GameObject:
   - component: {fileID: 940948824}
   - component: {fileID: 940948823}
   - component: {fileID: 940948828}
+  - component: {fileID: 940948829}
   m_Layer: 0
   m_Name: Enemy (2)
   m_TagString: Untagged
@@ -4331,6 +4377,8 @@ MonoBehaviour:
   speed: 30
   movingAbility: 4
   StateAllDetail: 
+  UpPosition: 0
+  UpdateUnit: {fileID: 0}
   noOfMove: 0
   menuc: {fileID: 0}
   UImenu: {fileID: 0}
@@ -4427,6 +4475,8 @@ MonoBehaviour:
   speed: 25
   movingAbility: 4
   StateAllDetail: 
+  UpPosition: 0
+  UpdateUnit: {fileID: 0}
   noOfMove: 0
   menuc: {fileID: 0}
   UImenu: {fileID: 0}
@@ -4437,6 +4487,24 @@ MonoBehaviour:
   IsGoNext3: 0
   IsGoNext4: 0
   WeakestOne: {fileID: 0}
+--- !u!114 &940948829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 940948821}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47ca80b957d3f384eb58d726745bb4d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnglandArcher: {fileID: 561737020}
+  EnglandCavalry: {fileID: 327142332}
+  EnglandInfantry: {fileID: 1302228793}
+  FranceArcher: {fileID: 375857308}
+  FranceCavalry: {fileID: 553156798}
+  FranceInfantry: {fileID: 1658226564}
+  Model: {fileID: 0}
 --- !u!1 &963699271
 GameObject:
   m_ObjectHideFlags: 0
@@ -5554,6 +5622,8 @@ MonoBehaviour:
   speed: 25
   movingAbility: 10
   StateAllDetail: 
+  UpPosition: 0
+  UpdateUnit: {fileID: 0}
   noOfMove: 0
   menuc: {fileID: 0}
   UImenu: {fileID: 0}
@@ -6327,6 +6397,8 @@ MonoBehaviour:
   speed: 30
   movingAbility: 4
   StateAllDetail: 
+  UpPosition: 0
+  UpdateUnit: {fileID: 0}
   noOfMove: 0
   menuc: {fileID: 0}
   UImenu: {fileID: 0}
@@ -6423,6 +6495,8 @@ MonoBehaviour:
   speed: 40
   movingAbility: 4
   StateAllDetail: 
+  UpPosition: 0
+  UpdateUnit: {fileID: 0}
   noOfMove: 0
   menuc: {fileID: 0}
   UImenu: {fileID: 0}
@@ -6778,6 +6852,11 @@ Prefab:
     - target: {fileID: 4059983512920860, guid: 2a17160d0b531cc48b0b44bb9c69f49b, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 54183221012052980, guid: 2a17160d0b531cc48b0b44bb9c69f49b,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 126
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2a17160d0b531cc48b0b44bb9c69f49b, type: 2}
@@ -7231,6 +7310,8 @@ MonoBehaviour:
   speed: 50
   movingAbility: 5
   StateAllDetail: 
+  UpPosition: 0
+  UpdateUnit: {fileID: 0}
   noOfMove: 0
   menuc: {fileID: 0}
   UImenu: {fileID: 0}
@@ -7861,6 +7942,11 @@ Prefab:
     - target: {fileID: 4504935115507918, guid: 185067cb59a1ea648ab85a288d426046, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54248211481682184, guid: 185067cb59a1ea648ab85a288d426046,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 126
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 185067cb59a1ea648ab85a288d426046, type: 2}

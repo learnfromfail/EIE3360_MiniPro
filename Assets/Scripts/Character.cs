@@ -53,6 +53,7 @@ public class Character : MonoBehaviour {
 
         if (UpPosition == true)
         {
+           // gameObject.transform.LookAt(UpdateUnit.gameObject.transform);
             Vector3 targetPos = ChangeV2toV3(ChangeCoordinateTofloat(UpdateUnit.coordinateX, UpdateUnit.coordinateY));
             transform.position = Vector3.Lerp(transform.position, targetPos, 0.2f);
             if (Vector3.Distance(transform.position, targetPos) < 1)
@@ -74,8 +75,9 @@ public class Character : MonoBehaviour {
     }
 
     public void Move(int x,int y)
-    {   
+    {
         //
+        if (ModelMovement)
         ModelMovement.MoveAnimation(true);
         //
         int[] parms = new int[4] { currentX, currentY, x, y };
